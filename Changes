@@ -14,3 +14,6 @@ Revision history for Perl extension Proc::ProcessTable.
 	bytes on linux for consistency with solaris; also added "time"
 	and "ctime" fields to linux for consistency. Updated
 	documentation in Process.pm. Folded in AIX port by David Paquet.
+
+0.06  Wed Dec  9 23:42:05 1998
+	- added HPUX port by Mike Romberg.

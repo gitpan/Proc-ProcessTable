@@ -15,9 +15,11 @@ Process/Process.pm
 hints/linux.pl
 hints/solaris.pl
 hints/aix.pl
+hints/hpux.pl
 os/Linux.c
 os/Linux.h
 os/Solaris.c
 os/Solaris.h
 os/aix.c
 os/aix.h
+os/HPUX.c
