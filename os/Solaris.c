@@ -108,8 +108,10 @@ void OS_get_table(){
 		     psbuf.pr_sid,           /* sess */
 #if defined(PROC_FS)
 		     psbuf.pr_lwp.pr_pri,    /* priority */   
+		     psbuf.pr_lwp.pr_nice,   /* nice */
 #else
 		     psbuf.pr_pri,           /* priority */   
+		     psbuf.pr_nice,          /* nice */
 #endif
 		     psbuf.pr_ttydev,        /* ttynum */
 		     psbuf.pr_flag,          /* flags */
@@ -131,6 +133,9 @@ void OS_get_table(){
 		     psbuf.pr_start.tv_sec,  /* start */
 		     pctcpu,                 /* pctcpu */
 		     state,                  /* state */
+#if defined(PROC_FS)
+		     psbuf.pr_lwp.pr_onpro,  /* on which processor */
+#endif
 		     pctmem,                 /* pctmem */
 		     psbuf.pr_psargs         /* cmndline */ 
 		    );

@@ -34,9 +34,9 @@
 /* Solaris is an all-or-nothing deal, all this stuff comes out of 
    one structure, so we don't need to dick around with the format much */
 #if defined(PROC_FS)
-static char Format[] = "iiiiiiiillllliilllslssss";
+static char Format[] = "iiiiiiiilllllliilllslssiss";
 #else
-static char Format[] = "iiiiiiiillllllllslssss";
+static char Format[] = "iiiiiiiilllllllllslssss";
 #endif
 
 /* Mapping of field to type */
@@ -52,6 +52,7 @@ static char* Fields[] = {
   "sess",
 
   "priority",
+  "nice",
   "ttynum",
   "flags",
   "time",
@@ -72,6 +73,9 @@ static char* Fields[] = {
 
   "pctcpu",
   "state",
+#if defined(PROC_FS)
+  "onpro",
+#endif
   "pctmem",
   "cmndline"
 };

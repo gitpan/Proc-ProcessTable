@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .22
+Proc::ProcessTable, version .23
 
 STATUS
 ======
@@ -71,6 +71,7 @@ Rolf Petter Halle <rph@nextel.no>		solaris nanosecond patch
 Bernhard Schmalhofer <Bernhard.Schmalhofer@fazi.de>	dec_osf port
 Sean Eskins <sean@gilasoft.com>				bsdi port
 Peter Reich <pr@alles.prima.de>				netbsd port
+Dave Alden <alden@math.ohio-state.edu>	solaris "nice" and "onproc" patch
 
 COPYRIGHT
 =========

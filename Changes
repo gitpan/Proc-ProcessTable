@@ -69,7 +69,6 @@ Revision history for Perl extension Proc::ProcessTable.
 	version of test code as well. Added bsdi port from Sean Eskins
 	<sean@gilasoft.com>. 
 
-
 0.17	Thu Aug 19 10:57:16 1999
 	- Lost connection to ISP during upload to PAUSE, and PAUSE
 	won't let me reload it so I have to increment the version
@@ -117,3 +116,7 @@ Revision history for Perl extension Proc::ProcessTable.
 	in kilobytes, not pages in 2.6 and above (they are in pages in 
 	the struct prpsinfo in < 2.6, but also available directly as
 	bytes). 
+
+0.23	Mon Nov  1 08:32:54 1999
+	- Added patch from Dave Alden <alden@math.ohio-state.edu> for
+	solaris "nice" and "onproc" fields.
