@@ -1,8 +1,3 @@
-/* FIX test script */
-/* FIX documentation */
-/* FIX comment style */
-/* ALL FIXME's */
-
 
 #include "os/Linux.h"
 

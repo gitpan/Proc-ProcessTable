@@ -1,9 +1,16 @@
-Proc::ProcessTable, version .01
+Proc::ProcessTable, version .04
 
 STATUS
 ======
-This is ALPHA software; use at your own risk. Currently only works on
-Linux. Feedback greatly appreciated.  
+This is ALPHA software; use at your own risk. Currently known to work
+on linux. 
+
+This version also contains preliminary pre-alpha support for solaris
+that I cobbled together from some really old code and perusal of the
+solaris man pages I got off the web. I don't have access to a solaris
+box at the moment, so the chances that this will work right are less
+than slim. The only thing I have been able to check it for is syntax
+with gcc. Comments, bug reports and patches are greatly appreciated.
 
 DESCRIPTION
 ===========
