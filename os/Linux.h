@@ -57,7 +57,7 @@ struct procstat {
   int priority;
   unsigned timeout;
   unsigned itrealvalue;
-  int starttime;
+  unsigned long  starttime;
   unsigned vsize;
   unsigned rss;
   unsigned rlim;

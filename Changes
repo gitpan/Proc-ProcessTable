@@ -185,4 +185,13 @@ Revision history for Perl extension Proc::ProcessTable.
 	fixes the linux-ppc problem reported by Marcus Crafter.
 
 	
-	
+0.35	Mon Jul  1 11:24:43 EDT 2002
+	-Patch from Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+	to fix starttime overflow bug on linux. This should also fix
+	multiprocessor starttime bugs. He says there is another
+	overflow after 25 days of uptime though :(
+	Nearly identical patches from Doug Lewis
+	<dlewis@exchange.webmd.net> and Jan L. Peterson
+	<jlp@flipdog.com> to fix taint problem. Patch from Peter van
+	Hooft <hooft@natlab.research.philips.com> to allow non-root
+	users to list processes on IRIX.

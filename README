@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .34
+Proc::ProcessTable, version .35
 
 STATUS
 ======
@@ -108,6 +108,14 @@ Stephen Pillinger <S.M.Pillinger@cs.bham.ac.uk>
 					overflow.	  
 H.Merijn Brand <h.m.brand@hccnet.nl>	Patch for File::Find on AIX.
 Anthony Higa <anthony@squareusa.com>	Linux code cleanup patch.
+Thomas Glanzmann <sithglan@stud.uni-erlangen.de>
+					Patch to fix starttime
+					overflow and MP time bugs on linux.
+Doug Lewis <dlewis@exchange.webmd.net>	Patch for taint checking.
+Jan L Peterson <jlp@flipdog.com>	Patch for taint checking.
+Peter van Hooft <hooft@natlab.research.philips.com>
+					Patch to allow non-root use on
+					IRIX.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.

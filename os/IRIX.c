@@ -40,9 +40,9 @@ void OS_get_table(){
   char pctcpu[7];
   char pctmem[7];
 
-  if ( (pagesize = getpagesize()) == NULL ) return;
+  if ( (pagesize = getpagesize()) == 0 ) return;
     
-  if( (procdir = opendir( "/proc" )) == NULL ) return;
+  if( (procdir = opendir( "/proc/pinfo" )) == NULL ) return;
 
   sysmp(MP_SAGET, MPSA_RMINFO, &rminfo, sizeof(rminfo));
   swapctl(SC_GETSWAPTOT, &tswap);
@@ -53,7 +53,7 @@ void OS_get_table(){
     if( strtok(procdirp->d_name, "0123456789") != NULL ){ continue; }
       
     /* Construct path of the form /proc/proc_number */
-    strcpy( pathbuf, "/proc/"); 
+    strcpy( pathbuf, "/proc/pinfo/"); 
     strcat( pathbuf, procdirp->d_name );
       
     if( (psdata = open( pathbuf, O_RDONLY )) == -1 ) continue;
@@ -114,7 +114,7 @@ void OS_get_table(){
     sprintf( pctcpu, "%3.2f", 
 	     (float) ((psbuf.pr_time.tv_sec) * 100) / (( time(NULL) - psbuf.pr_start.tv_sec ) * 100));
 
-    totswap = (int)tswap * SWAP_BLKSIZE / (int)pagesize;
+    totswap = tswap * SWAP_BLKSIZE / pagesize;
     sprintf( pctmem, "%5.2f", 
 	     ((double)psbuf.pr_size)/(double)(rminfo.physmem+totswap)*100);
 

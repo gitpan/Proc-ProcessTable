@@ -14,7 +14,6 @@ README.dec_osf
 README.bsdi
 README.netbsd
 README.hpux
-README.taint
 PORTING
 TODO
 example.pl

@@ -65,7 +65,7 @@ struct procstat* get_procstat( char* path, struct procstat* prs)
 	prs->stime = JIFFIES_TO_MICROSECONDS(prs->stime); 
 	prs->cutime = JIFFIES_TO_MICROSECONDS(prs->cutime); 
 	prs->cstime = JIFFIES_TO_MICROSECONDS(prs->cstime); 
-	prs->starttime = JIFFIES_TO_MICROSECONDS(prs->starttime); 
+	prs->starttime /= Hertz;
 	prs->timeout = JIFFIES_TO_MICROSECONDS(prs->timeout); 
 
 	return prs;
@@ -126,7 +126,7 @@ void OS_get_table()
 	/* for bless_into_proc, we make 2 to guarantee that strings terminate */
 	struct procstat prs[1];
 	char fname[NAME_MAX];
-	long start;
+	unsigned long start;
 	char state[32];
 	char cmndline[ARG_MAX]; 
 	char pctmem[32];
@@ -194,9 +194,9 @@ void OS_get_table()
 		strcpy(fname, strtok(prs->comm, "()"));
 		format[F_FNAME] = tolower(format[F_FNAME]); /* fname */
 
-		/* starttime is micro-seconds since boot; convert to unix time */
+		/* starttime is seconds since boot; convert to unix time */
 		if( Btime != 0 ) {
-			start = (prs->starttime/1000) + Btime;
+			start = prs->starttime + Btime;
 			format[F_START] = tolower(format[F_START]); /* start */
 		}
 
@@ -442,6 +442,10 @@ static char buf[1024];
 
 static int init_Hertz_value(void) 
 {
+#ifdef HZ
+	Hertz = (unsigned long)HZ;    /* <asm/param.h> */
+#else
+
 	unsigned long user_j, nice_j, sys_j, other_j;  /* jiffies (clock ticks) */
 	double up_1, up_2, seconds;
 	unsigned long jiffies, h;
@@ -471,14 +475,10 @@ static int init_Hertz_value(void)
 		case  990 ... 1010 :  Hertz = 1000; break;
 		case 1015 ... 1035 :  Hertz = 1024; break; /* Alpha */
 		default:
-#ifdef HZ
-		Hertz = (unsigned long)HZ;    /* <asm/param.h> */
-#else
 		Hertz = (sizeof(long)==sizeof(int)) ? 100UL : 1024UL;
-#endif
 		fprintf(stderr, "Unknown HZ value! (%ld) Assume %ld.\n", h, Hertz);
 	}
-
+#endif /* HZ */
 	return 0; /* useless, but FILE_TO_BUF has a return in it */
 }
 
