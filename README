@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .37
+Proc::ProcessTable, version .38
 
 STATUS
 ======
@@ -138,6 +138,7 @@ J Robert Ray <jrray@jrray.org>		Windows port.
 Kong Li <Kong.Li@netiq.com>		Solaris multithread support.
 <jon@jjb.demon.co.uk>			Patch for tty mapping.
 Philip Molter <philip@texas.net>	Patch for my Solaris typo.
+Tim Cutts <tjrc@sanger.ac.uk>		Patch for Tru64 clusters.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.

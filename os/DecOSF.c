@@ -66,7 +66,7 @@ void OS_get_table()
       continue;
 
     /* Construct path of the form /proc/proc_number */
-    sprintf( pathbuf, "/proc/%d", procnum );
+    sprintf( pathbuf, "/proc/%d", pstbl[procnum % PROCCNT].pi_pid );
 
     if( (psdata = open( pathbuf, O_RDONLY )) == -1 ) continue;
 

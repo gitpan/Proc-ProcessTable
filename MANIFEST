@@ -23,6 +23,9 @@ Process/Process.pm
 hints/linux.pl
 hints/solaris.pl
 hints/aix.pl
+hints/aix_4_2.pl
+hints/aix_4_3.pl
+hints/aix_5.pl
 hints/hpux.pl
 hints/freebsd.pl
 hints/irix.pl
@@ -36,6 +39,8 @@ os/Solaris.c
 os/Solaris.h
 os/aix.c
 os/aix.h
+os/aix_getprocs.c
+os/aix_getprocs.h
 os/HPUX.c
 os/FreeBSD.c
 os/FreeBSD.h
