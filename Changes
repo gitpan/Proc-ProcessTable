@@ -136,3 +136,7 @@ Revision history for Perl extension Proc::ProcessTable.
 	from Philip Gwyn <fil@pied.nu>. Added patch from Slaven Rezic
 	<eserte@cs.tu-berlin.de> for FreeBSD and to make Storable
 	optional. 
+
+0.28	Mon Aug 14 16:31:43 MYT 2000
+	- Patch from Slaven Rezic <eserte@cs.tu-berlin.de> to make
+	test script -w clean.

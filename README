@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .27
+Proc::ProcessTable, version .28
 
 STATUS
 ======
@@ -81,6 +81,8 @@ F. Buirey <f.buirey@saprr.fr> 		AIX patch for SMP
 Aaron Sherman <ajs@ajs.com>		Proc::Killall module
 Philip Gwyn <fil@pied.nu>		jiffies -> Usec patch for linux
 Slaven Rezic <eserte@cs.tu-berlin.de>	Patch for Storable, FreeBSD 
+Slaven Rezic <eserte@cs.tu-berlin.de>	Patch to make test script -w clean
+
 			
 COPYRIGHT
 =========

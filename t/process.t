@@ -21,7 +21,8 @@ foreach $got ( @{$t->table} )
 #  print STDERR $got->pid, "  ", $got->fname, "\n";
   print STDERR "--------------------------------\n";
   foreach $field ($t->fields){
-    print STDERR $field, ":  ", $got->{$field}, "\n";
+    my $v = $got->{$field};
+    print STDERR $field, ":  ", (defined $v ? $v : "<undef>"), "\n";
   }
 
 }
