@@ -23,7 +23,7 @@ char* OS_initialize() {
 
   if (odm_initialize() == 0) {
     obj = (struct CuAt*)getattr ("sys0", "realmem", 0, &how_many);
-    Sysmem = atol(obj->value);
+    Sysmem = strtoull(obj->value, 0, 10);
     odm_terminate();
   }
 

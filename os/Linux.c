@@ -2,7 +2,7 @@
 #include "os/Linux.h"
 
 unsigned long Hertz;
-
+/* it would be more accurate to first multiply by 1000, but that can lead to overflow */
 #define JIFFIES_TO_MICROSECONDS(x) (((x))/Hertz*1000)
 static int init_Hertz_value(void);
 
@@ -401,7 +401,7 @@ static char buf[1024];
 #define FILE_TO_BUF(filename, fd) do{                           \
     static int n;                                               \
     if (fd == -1 && (fd = open(filename, O_RDONLY)) == -1) {    \
-        fprintf(stderr, BAD_OPEN_MESSAGE);                      \
+        ppt_warn(BAD_OPEN_MESSAGE);                   		\
         close(fd);                                              \
         return 0;                                               \
     }                                                           \
@@ -476,7 +476,7 @@ static int init_Hertz_value(void)
 		case 1015 ... 1035 :  Hertz = 1024; break; /* Alpha */
 		default:
 		Hertz = (sizeof(long)==sizeof(int)) ? 100UL : 1024UL;
-		fprintf(stderr, "Unknown HZ value! (%ld) Assume %ld.\n", h, Hertz);
+		ppt_warn("Unknown HZ value! (%ld) Assume %ld.\n", h, Hertz);
 	}
 #endif /* HZ */
 	return 0; /* useless, but FILE_TO_BUF has a return in it */

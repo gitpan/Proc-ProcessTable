@@ -10,13 +10,15 @@
  *
  */
 
-#include <procinfo.h>
-#include <sys/types.h>
 #include <odmi.h>
+#include <procinfo.h>
+#include <stdlib.h>
 #include <sys/cfgodm.h>
-#include "os/aix_getprocs.h"
+#include <sys/types.h>
+
 #include "EXTERN.h"
 #include "perl.h"
+#include "os/aix_getprocs.h"
 
 
 /* convert a struct timeval to seconds *
@@ -30,16 +32,16 @@
 void bless_procs(struct procsinfo64 *, int);
 
 
-static long memory;
-static int pagesize;
-static int ncpus;
-static double now_time;
+static unsigned long long memory;
+static int pagesize = 0;
+static int ncpus = 0;
+static double now_time = 0.0;
 static char format[F_LASTFIELD+1];
 
 
 char *OS_initialize() {
 
-	struct CuAt* odm_object = NULL;
+	struct CuAt* odm_object;
 	int num_fetched;
 
 	/* get the number of processors online */
@@ -52,13 +54,16 @@ char *OS_initialize() {
 	pagesize = getpagesize();
 
 	/* get the amount of physical memory */
-	if( 0 == odm_initialize ) {
-		PerlIO_printf(PerlIO_stderr(), "cannot initialize ODM in Proc::ProcessTable::OS_initialize (AIX)!\n");
+	if( 0 != odm_initialize() ) {
+		/* fprintf(stderr, "cannot initialize ODM in Proc::ProcessTable::OS_initialize (AIX)!\n"); */
+		ppt_warn("cannot initialize ODM in Proc::ProcessTable::OS_initialize (AIX)!");
 	} else {
 		odm_object = (struct CuAt*)getattr("sys0", "realmem", 0, &num_fetched);
-		memory = Atol(odm_object->value) * 1024;
+		memory = strtoull(odm_object->value, 0, 10);
 		odm_terminate();
 	}
+
+    memory = memory * 1024;
 
 	return NULL;
 
@@ -76,7 +81,8 @@ void OS_get_table() {
 /*	procs = New(0, procs, PROCS_TO_FETCH, struct procsinfo64); */
     procs = (struct procsinfo64 *)malloc(sizeof(struct procsinfo64) * PROCS_TO_FETCH);
 	if(NULL == procs) {
-		PerlIO_printf(PerlIO_stderr(), "cannot allocate memory in Proc::ProcessTable::OS_get_table!\n");
+		/* fprintf(stderr, "cannot allocate memory in Proc::ProcessTable::OS_get_table!\n"); */
+		ppt_warn("cannot allocate memory in Proc::ProcessTable::OS_get_table!");
 		return;
 	}
 
@@ -115,9 +121,13 @@ void bless_procs(struct procsinfo64 *procs, int count)
 	char state[STATE_LENGTH];
 	char *c = NULL;
 	struct procsinfo64 *curproc = NULL;
+    struct procsinfo curproc_for_getargs;
 	int zombie;
 	int done;
 	long utime, stime, cutime, cstime;
+
+    /* initialize */
+    Zero(&curproc_for_getargs, 1, struct procsinfo);
 
 	for( index = 0, curproc = procs; index < count; index++, curproc = procs+index ) {
 
@@ -206,7 +216,8 @@ void bless_procs(struct procsinfo64 *procs, int count)
 			}
 		} else {
 			snprintf(comm, ARG_MAX, "%s", curproc->pi_comm);
-			if( getargs(curproc, sizeof(struct procsinfo64), cmndline, ARG_MAX) < 0 ) {
+            curproc_for_getargs.pi_pid = curproc->pi_pid;
+			if( getargs(&curproc_for_getargs, sizeof(struct procsinfo), cmndline, ARG_MAX) < 0 ) {
 				snprintf(cmndline, ARG_MAX, "%s", curproc->pi_comm);
 			} else {
 				/* replace NUL characters in command line with spaces */

@@ -225,3 +225,15 @@ Revision history for Perl extension Proc::ProcessTable.
 0.38	Fri Dec  6 22:23:20 EST 2002
 	-Fixed my omission of new AIX files from MANIFEST. Patch from
 	Tim Cutts <tjrc@sanger.ac.uk> for Tru64 clusters.
+
+0.39	Fri Oct  3 11:45:21 MDT 2003
+	-Project is now hosted on SourceForge. Patch from Aaron
+	Sherman <ajs@ajs.com> from rt.cpan.org ticket #2578 to add a
+	warn function ppt_warn() instead of sending errors to stderr;
+	changed linux, bsdi and aix. Added ppt_croak and updated
+	PORTING docs. Added port to Darwin from Tom Wyant
+	<twyant3@comcast.net>. Added port to Nonstop-UX from Mike
+	Steinert <mike.steinert@motorola.com>. Patch from
+	James.FitzGibbon <James.FitzGibbon@target.com> for AIX 5.1
+	command line args. Added note to README.dec_osf that root
+	access is required.

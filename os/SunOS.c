@@ -30,8 +30,7 @@ void OS_get_table(void) {
         
    /* Open the kernel for reading */
    if ((kd = kvm_open(NULL, NULL, NULL, O_RDONLY, NULL)) == NULL) {
-      perror("kvm_open: can't open kernel");
-      exit(1);
+      ppt_croak("kvm_open: can't open kernel");
    }
    
    /*

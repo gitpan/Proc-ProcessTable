@@ -173,7 +173,7 @@ up-to-date information.
 
 =head1 AUTHOR
 
-D. Urist, durist@world.std.com
+D. Urist, durist@frii.com
 
 =head1 SEE ALSO
 

@@ -48,6 +48,8 @@ possible format specifiers are:
 "I" for int to be ignored
 "l" for long
 "L" for long to be ignored
+"j" for long long
+"J" for long long to be ignored
 "V" for perl scalar value (like a reference to an array)
 
 The fields argument is a pointer to a list of field
@@ -77,3 +79,8 @@ state		Process state. I prefer to return a string instead of
 		"run", "sleep", "uwait", "zombie" and "stop".
 
 See "os/Linux.c" for an example.
+
+For warnings/exceptions in OS code, please use ppt_warn() and
+ppt_croak(). These call perl's warn and croak functions, and thus play
+nice with perl's exception handling mechanism. Both functions take
+printf() style arguments.

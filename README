@@ -1,15 +1,20 @@
-Proc::ProcessTable, version .38
+Proc::ProcessTable, version 0.39
+
+Please note that I've moved development of this package to
+sourceforge.net. Please address all comments/bugs/patches to:
+
+http://sourceforge.net/projects/proc-ptable/
 
 STATUS
 ======
 This is BETA software; it seems to work, but use at your own risk :) 
 
-Currently works on windows, linux, solaris, aix, hpux, freebsd, irix, dec_osf,
-bsdi, netbsd, unixware 7.x and SunOS. Please see the "README.osname" files
-for details on individual os implementations. Please see the file
-PORTING if you are interested in making it work on something
-else. Please see the file TODO for a list of issues that need to be
-addressed (and send me patches!).
+Currently works on darwin, nonstop-ux windows, linux, solaris, aix,
+hpux, freebsd, irix, dec_osf, bsdi, netbsd, unixware 7.x and
+SunOS. Please see the "README.osname" files for details on individual
+os implementations. Please see the file PORTING if you are interested
+in making it work on something else. Please see the file TODO for a
+list of issues that need to be addressed (and send me patches!).
 
 Please note that the windows port requires the Cygwin environment to
 work (available from http://cygwin.com/), and that the code for the
@@ -134,22 +139,26 @@ Joseph Cavanaugh <Joseph.Cavanaugh@FMR.COM>
 					Solaris.  
 Marcus Crafter <crafterm@osa.de>	Patch for linux compiler
 					warnings.
-J Robert Ray <jrray@jrray.org>		Windows port.
+J Robert Ray <jrray@jrray.org>		Windows (Cygwin) port.
 Kong Li <Kong.Li@netiq.com>		Solaris multithread support.
 <jon@jjb.demon.co.uk>			Patch for tty mapping.
 Philip Molter <philip@texas.net>	Patch for my Solaris typo.
 Tim Cutts <tjrc@sanger.ac.uk>		Patch for Tru64 clusters.
+Aaron Sherman <ajs@ajs.com>		Patch for ppt_warn.
+Tom Wyant <twyant3@comcast.net>		Darwin port.
+Mike Steinert <mike.steinert@motorola.com>
+					Nonstop-UX port.
+
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.
 			
 COPYRIGHT
 =========
-Copyright (c) 1998-2002 Daniel J. Urist. All rights reserved.
+Copyright (c) 1998-2003 Daniel J. Urist. All rights reserved.
 This package is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 --
 Daniel J. Urist
-durist@world.std.com
-http://www.world.std.com/~durist
+durist@frii.com

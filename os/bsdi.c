@@ -45,15 +45,15 @@ void OS_get_table() {
 
   /* Open the kvm interface, get a descriptor */
   if ((kd = kvm_open(NULL, NULL, NULL, 0, errbuf)) == NULL) {
-    fprintf(stderr, "kvm_open: %s\n", errbuf);
-    exit(1);
+    /* fprintf(stderr, "kvm_open: %s\n", errbuf); */
+    ppt_croak("kvm_open: ", errbuf);
   }  
  
   /* Get the list of processes. */
   if ((procs = kvm_getprocs(kd, KERN_PROC_ALL, 0, &count)) == NULL) {
 	kvm_close(kd);
-    fprintf(stderr, "kvm_getprocs: %s\n", kvm_geterr(kd));
-    exit(1);
+    /* fprintf(stderr, "kvm_getprocs: %s\n", kvm_geterr(kd)); */
+    ppt_croak("kvm_getprocs: ", kvm_geterr(kd));
   }
 
   /* Iterate through the processes in kinfo_proc, sending proc info */

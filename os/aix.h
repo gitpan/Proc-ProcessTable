@@ -2,6 +2,7 @@
 /* Includes                                                                */
 /***************************************************************************/
 
+#include <stdlib.h>
 #include <procinfo.h>
 #include <unistd.h>
 #include <string.h>
@@ -68,7 +69,7 @@
 /* Globals                                                                 */
 /***************************************************************************/
 
-static long Sysmem;
+static unsigned long long Sysmem;
 static int  PageSize;
 static int  ProcessNumber;
 

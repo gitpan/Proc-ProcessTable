@@ -1,14 +1,3 @@
-- Defined and consistent error handling; at the suggestion of Burkhard
-Meier <burkhard.meier@mailhost.ixos.de>, table() should throw an
-exception on fatal error; i.e. die with strerror(errno) as error
-message. This is definitely the best behavior; the problem is that
-I'd like to keep the API non-perl-specific, so I don't want to clutter
-up the OS-specific code with perl-isms, and perl's die() mechanism is,
-well, specific to perl. I'm not sure what the best solution to this
-is; maybe include a perl-specific header file that had die() and
-warn() macros, so these could then be language-specific? Still kinda
-yucky... 
-
 - "pctcpu" means different things on different systems. On linux, it
 means percent CPU used by a process since its start; on Solaris, it
 means a recent average of percent CPU ala top (the kernel provides

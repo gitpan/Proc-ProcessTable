@@ -1,3 +1,5 @@
+Note: On Tru64, scripts have to run as root to get process table access.
+
 SUPPORTED ATTRIBUTES
 ====================
   uid         UID of process
@@ -28,7 +30,7 @@ TODO
 ====
 From the pstatus structure available from /proc we could get utime,
 stime, cutime and cstime. 
-Where can we get the number of threads runnig within the process?
+Where can we get the number of threads running within the process?
 
 BUGS
 ====
