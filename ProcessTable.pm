@@ -1,5 +1,7 @@
 package Proc::ProcessTable;
 
+require 5.004;
+
 use strict;
 use Carp;
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD);
@@ -14,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -109,7 +111,6 @@ sub _get_tty_list {
 
 1;
 __END__
-# Below is the stub of documentation for your module. You better edit it!
 
 =head1 NAME
 
@@ -119,7 +120,7 @@ Proc::ProcessTable - Perl extension to access the unix process table
 
   use ProcessTable;
 
-  $p = new ProcessTable( 'cache_ttys' => 1 ); 
+  $p = new Proc::ProcessTable( 'cache_ttys' => 1 ); 
   $ref = $p->table;
 
 =head1 DESCRIPTION

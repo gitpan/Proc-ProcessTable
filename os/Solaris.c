@@ -3,10 +3,10 @@
 
 /* Make sure /proc is mounted */
 char* OS_initialize(){
-  struct statfs sfs;
+  struct statvfs svfs;
 
   static char* no_proc = "/proc unavailable";
-  if( statfs("/proc", &sfs) == -1 ){
+  if( statvfs("/proc", &svfs) == -1 ){
     return no_proc;
   }
 

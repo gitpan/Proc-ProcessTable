@@ -35,6 +35,8 @@ if ($pid = fork){ # parent
 	exit -1;
       }
 
+      sleep 2;
+
       foreach $got ( @{$t->table} ){
 	if( $got->pid == $pid ){
 	  print "not ok 4\n";

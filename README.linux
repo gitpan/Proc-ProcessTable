@@ -1,0 +1,41 @@
+SUPPORTED ATTRIBUTES
+====================
+  uid         UID of process
+  gid         GID of process
+  pid         process ID
+  ppid        parent process ID
+  pgrp        process group
+  sess        session ID
+  priority    priority of process
+  ttynum      tty number of process
+  flags       flags of process
+  minflt      minor page faults              
+  cminflt     child minor page faults        
+  majflt      major page faults              
+  cmajflt     child major page faults        
+  utime       user mode time (1/100s of seconds)
+  stime       kernel mode time                  
+  cutime      child utime                       
+  cstime      child stime                       
+  time        user + system time                 
+  ctime       child user + system time
+  size        virtual memory size (bytes)
+  rss         resident set size (bytes)
+  wchan       address of current system call 
+  fname       file name
+  start       start time (seconds since the epoch)
+  pctcpu      percent cpu used since process started
+  state       state of process
+  pctmem      percent memory
+  cmndline    full command line of process
+  ttydev      path of process's tty
+
+TODO
+====
+It would be nice to get the euid and egid like solaris.
+
+BUGS
+====
+Times are in "jiffies" (1/100 second); this should probably be changed
+to microseconds since both solaris and aix can support microsecond
+resolution. 

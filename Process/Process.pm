@@ -122,10 +122,12 @@ Same as above for the process group.
 =item all other methods...
 
 are simple accessors that retrieve the process attributes for which
-they are named. Currently supported (under linux) are:
+they are named. Currently supported are:
 
   uid         UID of process
   gid         GID of process
+  euid        effective UID of process           (Solaris only)
+  egid        effective GID of process           (Solaris only)
   pid         process ID
   ppid        parent process ID
   pgrp        process group
@@ -133,16 +135,18 @@ they are named. Currently supported (under linux) are:
   priority    priority of process
   ttynum      tty number of process
   flags       flags of process
-  minflt      minor page faults
-  cminflt     child minor page faults
-  majflt      major page faults
-  cmajflt     child major page faults
-  utime       user mode time (1/100s of seconds)
-  stime       kernel mode time
-  cutime      child utime
-  cstime      child stime
+  minflt      minor page faults                  (Linux only)
+  cminflt     child minor page faults            (Linux only)
+  majflt      major page faults                  (Linux only)
+  cmajflt     child major page faults            (Linux only)
+  utime       user mode time (1/100s of seconds) (Linux only)
+  stime       kernel mode time                   (Linux only)
+  cutime      child utime                        (Linux only)
+  cstime      child stime                        (Linux only)
+  time        user + system time                 
+  ctime       child user + system time
   size        virtual memory size (bytes)
-  rss         resident set size (pages)
+  rss         resident set size (bytes)
   wchan       address of current system call 
   fname       file name
   start       start time (seconds since the epoch)
@@ -151,6 +155,9 @@ they are named. Currently supported (under linux) are:
   pctmem      percent memory
   cmndline    full command line of process
   ttydev      path of process's tty
+
+See the "README.osname" files in the distribution for more
+information. 
 
 =back
 

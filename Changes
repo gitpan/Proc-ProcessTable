@@ -6,5 +6,11 @@ Revision history for Perl extension Proc::ProcessTable.
 0.03  Sun Jul 26 09:07:50 1998
 	- added argument to va_end to make linux-ppc work
 
-0,04  Fri Aug 14 22:51:31 1998
+0.04  Fri Aug 14 22:51:31 1998
         - preliminary pre-alpha solaris support
+
+0.05  Wed Dec  9 18:47:39 1998
+	- fixed minor compilation problems for solaris. Changed rss to
+	bytes on linux for consistency with solaris; also added "time"
+	and "ctime" fields to linux for consistency. Updated
+	documentation in Process.pm. Folded in AIX port by David Paquet.

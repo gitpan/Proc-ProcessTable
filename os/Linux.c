@@ -113,10 +113,10 @@ void OS_get_table(){
   char cmndline[ARG_MAX]; 
   char pctmem[7];
   char pctcpu[7];
+  static char format[F_LASTFIELD + 1];
 
-  char format[F_LASTFIELD + 1];
-  format[F_LASTFIELD + 1] = '\0';
-
+  size_t pagesize = getpagesize();
+  
   if( (procdir = opendir("/proc")) == NULL ){
     return;
   }
@@ -232,8 +232,10 @@ void OS_get_table(){
 			 prs.stime,
 			 prs.cutime,
 			 prs.cstime,
+			 prs.utime + prs.stime, /* FIXME check units w/solaris for consistency */
+			 prs.cutime + prs.cstime,
 			 prs.vsize,
-			 prs.rss,
+			 prs.rss * pagesize, 
 			 prs.wchan,
 			 
 			 fname,

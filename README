@@ -1,16 +1,13 @@
-Proc::ProcessTable, version .04
+Proc::ProcessTable, version .05
 
 STATUS
 ======
 This is ALPHA software; use at your own risk. Currently known to work
-on linux. 
-
-This version also contains preliminary pre-alpha support for solaris
-that I cobbled together from some really old code and perusal of the
-solaris man pages I got off the web. I don't have access to a solaris
-box at the moment, so the chances that this will work right are less
-than slim. The only thing I have been able to check it for is syntax
-with gcc. Comments, bug reports and patches are greatly appreciated.
+to some extent on linux, solaris and aix. Please see the "README.osname"
+files for details on individual os implementations. Please
+see the file PORTING if you are interested in making it work on
+something else. Comments, bug reports, patches and especially ports
+are greatly appreciated.  
 
 DESCRIPTION
 ===========
@@ -52,12 +49,11 @@ After unpacking the tar file, do:
 There is embedded POD documentation in ProcessTable.pm and
 Process/Process.pm.
 
-SUPPORTED OPERATING SYSTEMS
-===========================
-At the moment, this module only works on Linux (specifically, Redhat
-5.0 for Intel, which is all I have access to right now, but hopefully
-it will work on other Linuxes). Please see the file PORTING if you are
-interested in making it work on something else.
+ACKNOWLEDGEMENTS
+================
+Thanks to the many people who sent in patches to help get the solaris
+version to build. Thanks especially to David Paquet for providing the
+AIX port.
 
 COPYRIGHT
 =========

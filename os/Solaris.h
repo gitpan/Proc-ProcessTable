@@ -6,6 +6,8 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <sys/proc.h> /* needed for process state constants */
+#include <sys/statvfs.h>
+#include <sys/types.h>
 
 #if defined(PROC_FS)
 #include <procfs.h>

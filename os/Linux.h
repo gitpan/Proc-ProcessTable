@@ -29,7 +29,6 @@
 long Btime;
 unsigned Sysmem;
 
-
 /***********************************************************/
 /* stuff stored in /proc/xxx/stat it would be nice if this */
 /* was in a system header file somewhere                   */
@@ -74,12 +73,12 @@ struct procstat {
 
 /* We need to pass in a cap for ignore, lower for store on object */
 /* We can just lc these! */
-static char Defaultformat[] = "IIIIIIIIIIIIIIIIIIIISLSSSS";
+static char Defaultformat[] = "IIIIIIIIIIIIIIIIIIIIIISLSSSS";
 
 /* Mapping of field to type */
 static char* Fields[] = {
   "uid",
-#define F_UID 0   /* C is the stuuuuuupidest fucking language ... */
+#define F_UID 0 
 
   "gid",
 #define F_GID 1
@@ -129,32 +128,38 @@ static char* Fields[] = {
   "cstime",
 #define F_CSTIME 16
 
+  "time",
+#define F_TIME 17
+
+  "ctime",
+#define F_CTIME 18
+
   "size",
-#define F_SIZE 17
+#define F_SIZE 19
 
   "rss",
-#define F_RSS 18
+#define F_RSS 20
 
   "wchan",
-#define F_WCHAN 19
+#define F_WCHAN 21
 
   "fname",
-#define F_FNAME 20
+#define F_FNAME 22
 
   "start",
-#define F_START 21
+#define F_START 23
 
   "pctcpu",
-#define F_PCTCPU 22
+#define F_PCTCPU 24
 
   "state",
-#define F_STATE 23
+#define F_STATE 25
 
   "pctmem",
-#define F_PCTMEM 24
+#define F_PCTMEM 26
 
   "cmndline"
-#define F_CMNDLINE 25
+#define F_CMNDLINE 27
 
-#define F_LASTFIELD 25
+#define F_LASTFIELD 27
 };
