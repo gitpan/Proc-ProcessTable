@@ -1,5 +1,13 @@
-- Fix taint problem (won't run under perl -T; problem with
-File::Find). Workarounds currently in README.taint.
+- Defined and consistent error handling; at the suggestion of Burkhard
+Meier <burkhard.meier@mailhost.ixos.de>, table() should throw an
+exception on fatal error; i.e. die with strerror(errno) as error
+message. This is definitely the best behavior; the problem is that
+I'd like to keep the API non-perl-specific, so I don't want to clutter
+up the OS-specific code with perl-isms, and perl's die() mechanism is,
+well, specific to perl. I'm not sure what the best solution to this
+is; maybe include a perl-specific header file that had die() and
+warn() macros, so these could then be language-specific? Still kinda
+yucky... 
 
 - "pctcpu" means different things on different systems. On linux, it
 means percent CPU used by a process since its start; on Solaris, it
@@ -18,7 +26,7 @@ Solaris uses a structure to store it. I don't know what the best
 solution is here; pass it in as a long and hope that's big enough, or
 maybe as a string and let perl deal with it?
 
--There should be some sort of minimal useful set of attributes with
+- There should be some sort of minimal useful set of attributes with
 consistent units that all OS modules should support. Maybe this should
 be part of a firmer spec than what's in the PORTING file.
 
@@ -27,7 +35,5 @@ really nice for things like pctmem and pctcpu, but this is where the
 operating systems really diverge so getting consistent meaningful
 information would be hard.
 
-- An NT port (if possible) would be nice and quite a coup.
 
-- Porting the API to TCL and Python would be nice (shouldn't be hard).
 

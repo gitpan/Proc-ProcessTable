@@ -15,11 +15,14 @@ symlink "os/Solaris.c", "OS.c" || die "Could not link os/Solaris.c to os/OS.c\n"
 # otherwise default to ioctl-proc
 `uname -r` =~ /^(\d+\.\d+)/;
 if( $1 > 5.5 ){
-    $self->{DEFINE} = "-DPROC_FS";
+    $self->{DEFINE} = $self->{DEFINE} . " -DPROC_FS";
 }
 
 # For reasons I don't understand, we have to turn off the large file
 # environment flags in order to compile in the large file environment
+#10/28/2002:
+# Should not set CCLFAGS to empty.  Should only remove these two symbol while preserving others.
 if( `/usr/bin/getconf LFS_CFLAGS` =~ /-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64/){
-    $self->{CCFLAGS} = " ";
+    $self->{CCFLAGS} = $Config{ccflags};
+    $self->{CCFLAGS} =~ s/-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64//;
 }

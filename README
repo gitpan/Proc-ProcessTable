@@ -1,18 +1,29 @@
-Proc::ProcessTable, version .35
+Proc::ProcessTable, version .36
 
 STATUS
 ======
 This is BETA software; it seems to work, but use at your own risk :) 
 
-Currently works on linux, solaris, aix, hpux, freebsd, irix, dec_osf,
+Currently works on windows, linux, solaris, aix, hpux, freebsd, irix, dec_osf,
 bsdi, netbsd, unixware 7.x and SunOS. Please see the "README.osname" files
 for details on individual os implementations. Please see the file
 PORTING if you are interested in making it work on something
 else. Please see the file TODO for a list of issues that need to be
 addressed (and send me patches!).
 
+Please note that the windows port requires the Cygwin environment to
+work (available from http://cygwin.com/), and that the code for the
+port is derived from Cygwin code and is therefore covered by the
+Cygwin license (http://cygwin.com/licensing.html).
+
+Multithread support is now available for Solaris; please see
+README.solaris for info. It may work under other OS's as well; please
+let me know if it does.
+
 Comments, bug reports, patches and especially ports are greatly
-appreciated.
+appreciated. If you want to submit a patch, *please* use standard
+context-diff format; if you're submitting a port, a tarball of the new
+files is great.
 
 DESCRIPTION
 ===========
@@ -116,6 +127,16 @@ Jan L Peterson <jlp@flipdog.com>	Patch for taint checking.
 Peter van Hooft <hooft@natlab.research.philips.com>
 					Patch to allow non-root use on
 					IRIX.
+Mike Castle <dalgoda@ix.netcom.com>	Documentation typo patch.
+James FitzGibbon <james@ehlo.com>	AIX patch.
+Joseph Cavanaugh <Joseph.Cavanaugh@FMR.COM>
+					Patch to add thread count for
+					Solaris.  
+Marcus Crafter <crafterm@osa.de>	Patch for linux compiler
+					warnings.
+J Robert Ray <jrray@jrray.org>		Windows port.
+Kong Li <Kong.Li@netiq.com>		Solaris multithread support.
+<jon@jjb.demon.co.uk>			Patch for tty mapping.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.

@@ -24,6 +24,11 @@ SUPPORTED ATTRIBUTES
   cmndline    full command line of process
   ttydev      path of process's tty
 
+Thread
+======
+One can enable thread support by adding -DPROCESSTABLE_THREAD to the DEFINE line in Makefile.PL.
+Once this is done, one can invoke Proc::ProcessTable module from multiple threads within the
+same process.
 
 BUGS
 ====

@@ -1,3 +1,7 @@
+#ifdef	PROCESSTABLE_THREAD
+#define __REENTRANT
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -8,6 +12,9 @@ extern "C" {
 }
 #endif
 
+#ifdef	PROCESSTABLE_THREAD
+#include <pthread.h>
+#endif
 
 /*  As of version 5.005_something it seems sv_undef has been
 supplanted by PL_sv_undef. */
@@ -25,7 +32,7 @@ supplanted by PL_sv_undef. */
 #include <stdarg.h>
 
 /* prototypes to make the compiler shut up */
-void store_ttydev( HV*, long );
+void store_ttydev( HV*, unsigned long );
 void bless_into_proc(char* , char**, ...);
 void OS_get_table();
 char* OS_initialize();
@@ -41,11 +48,11 @@ HV* Ttydevs;
 AV* Proclist;
 
 /* Look up the tty device, given the ttynum and store it */
-void store_ttydev( HV* myhash, long ttynum ){
+void store_ttydev( HV* myhash, unsigned long ttynum ){
   SV** ttydev;
   char ttynumbuf[1024]; 
   
-  sprintf(ttynumbuf, "%li", ttynum);
+  sprintf(ttynumbuf, "%lu", ttynum);
   if( 
      Ttydevs != NULL &&
      (ttydev = hv_fetch(Ttydevs, ttynumbuf, strlen(ttynumbuf), 0)) != NULL 
@@ -53,7 +60,14 @@ void store_ttydev( HV* myhash, long ttynum ){
     hv_store(myhash, "ttydev", strlen("ttydev"), newSVsv(*ttydev), 0); 
   }
   else{
-    hv_store(myhash, "ttydev", strlen("ttydev"), &PL_sv_undef, 0);
+    /* hv_store(myhash, "ttydev", strlen("ttydev"), &PL_sv_undef, 0); */ 
+
+/*     Stuff an empty string into the hash if there is no tty; this */
+/*     way the ttydev method won't return undef for nonexistent ttys. I'm */
+/*     not sure if this is really the right behavior... */
+
+    hv_store(myhash, "ttydev", strlen("ttydev"), newSVpv("",0), 0); 
+
   }
 }
 
@@ -66,8 +80,10 @@ void store_ttydev( HV* myhash, long ttynum ){
 /*   s    string                                                      */
 /*   I    ignore this int                                             */
 /*   i    int                                                         */
-/*   S    ignore this long                                            */
+/*   L    ignore this long                                            */
 /*   l    long                                                        */
+/*   J    ignore this long-long                                       */
+/*   j    long-long                                                   */
 /*   V    perl scalar value                                           */
 /* fields is an array of pointers to field names                      */
 /* following that is a var args list of field values                  */
@@ -79,6 +95,7 @@ void bless_into_proc(char* format, char** fields, ...){
   SV *SV_val;
   int i_val;
   long l_val;
+  long long ll_val;
 
   HV* myhash;
   SV* ref;
@@ -130,6 +147,15 @@ void bless_into_proc(char* format, char** fields, ...){
 	/* Look up and store the tty if this is ttynum */
 	if( !strcmp(key, "ttynum") ) store_ttydev( myhash, l_val );
 	break;
+
+      case 'J':  /* ignore; creates an undef value for this key in the hash */
+	va_arg(args, long long);
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
+	break;
+      case 'j':  /* long */
+	ll_val = va_arg(args, long long);
+	hv_store(myhash, key, strlen(key), newSVnv(ll_val), 0);
+    break;
 
       case 'V':  /* perl scalar value */
 	SV_val = va_arg(args, SV *);
@@ -183,9 +209,53 @@ not_there:
     return 0;
 }
 
+#ifdef	PROCESSTABLE_THREAD
+pthread_mutex_t _mutex_table;
+pthread_mutex_t _mutex_new;
+
+void
+mutex_op(int lock, pthread_mutex_t *mutex)
+{
+	if (lock == 0) {	/*unlock*/
+		pthread_mutex_unlock(mutex);
+	} else {		/*lock*/
+		pthread_mutex_lock(mutex);
+	}
+}
+#endif
+
+void
+mutex_new(int lock)
+{
+#ifdef	PROCESSTABLE_THREAD
+	mutex_op(lock, &_mutex_new);
+#endif
+}
+
+void
+mutex_table(int lock)
+{
+#ifdef	PROCESSTABLE_THREAD
+	mutex_op(lock, &_mutex_table);
+#endif
+}
 
 MODULE = Proc::ProcessTable		PACKAGE = Proc::ProcessTable		
 PROTOTYPES: DISABLE
+
+BOOT:
+#ifdef	PROCESSTABLE_THREAD
+	pthread_mutex_init(&_mutex_table, NULL);
+	pthread_mutex_init(&_mutex_new, NULL);
+#endif
+
+void
+mutex_new(lock)
+	int lock
+
+void
+mutex_table(lock)
+	int lock
 
 double
 constant(name,arg)
@@ -200,6 +270,8 @@ table(obj)
      HV* hash;
      SV** fetched;
 
+
+     mutex_table(1);
      /* Cache a pointer to the tty device hash */ 
      Ttydevs = perl_get_hv("Proc::ProcessTable::TTYDEVS", FALSE);
 
@@ -228,6 +300,8 @@ table(obj)
 
      /* Return a ref to our process list */
      RETVAL = newRV_inc((SV*) Proclist);
+
+     mutex_table(0);
      
      OUTPUT:
      RETVAL

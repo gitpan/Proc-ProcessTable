@@ -195,3 +195,25 @@ Revision history for Perl extension Proc::ProcessTable.
 	<jlp@flipdog.com> to fix taint problem. Patch from Peter van
 	Hooft <hooft@natlab.research.philips.com> to allow non-root
 	users to list processes on IRIX.
+
+0.36	Tue Nov  5 23:04:12 EST 2002
+	-Patch for documentation typo for Killfam.pm from Mike Castle
+	<dalgoda@ix.netcom.com>. Patch for AIX v4.2 from James
+	FitzGibbon <james@ehlo.com> to take advantage of newer OS API;
+	this also required addition of a new return type (long-long,
+	specified as "j") to ProcessTable.xs. Patch to add new field
+	"numthr" for number of threads for Solaris from Joseph
+	Cavanaugh <Joseph.Cavanaugh@FMR.COM>. Patch for linux compiler
+	warnings from Marcus Crafter <crafterm@osa.de>. Changed HPUX
+	"cmd" field to "cmndline" for consistency with other ports at
+	the suggestion of Craig Cook <cncook@gene.COM>. Windows port
+	via Cygwin from J Robert Ray <jrray@jrray.org>. Patch for
+	multithread support under Solaris from Kong Li
+	<Kong.Li@netiq.com>. Patch for File::Find::prune tty mapping
+	buglet from <jon@jjb.demon.co.uk>. Changed behavior of
+	store_ttydev() in ProcessTable.xs to insert an empty string
+	for processes that don't have a tty, instead of having it
+	return undef. I *think* this will fix a problem reported on
+	HPUX by H.Merijn Brand <h.m.brand@hccnet.nl>. Changed ttynums
+	to be treated as unsigned to fix occasional negative ttynum
+	bug reported by Daniel Berger <djberge@qwest.com>. 

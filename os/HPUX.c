@@ -41,7 +41,7 @@ static char *Fields[] = {
 "state",
 "wchan",
 "procnum",
-"cmd",
+"cmndline",
 "fname", 
 "time",
 "cpticks",

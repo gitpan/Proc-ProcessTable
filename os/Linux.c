@@ -18,9 +18,9 @@ struct procstat* get_procstat( char* path, struct procstat* prs)
 		return NULL;
 
 	result = fscanf(fp, 
-			"%d %s %c %d %d %d %d %d %u %u %u %u %u %d %d %d %d %d %d %u %u %d %u %u %u %u %u %u %u %u %d %d %d %d %u",
+			"%d %s %c %d %d %d %d %d %u %u %u %u %u %d %d %d %d %d %d %u %u %lu %u %u %u %u %u %u %u %u %d %d %d %d %u",
 			&prs->pid, 
-			&prs->comm, 
+			prs->comm,		/* char comm[FILENAME_MAX]; */
 			&prs->state, 
 			&prs->ppid, 
 			&prs->pgrp, 

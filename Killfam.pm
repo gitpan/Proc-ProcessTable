@@ -62,7 +62,7 @@ Proc::Killfam - kill a list of pids, and all their sub-children
 
 =head1 SYNOPSIS
 
- use Proc::Kilfam;
+ use Proc::Killfam;
  killfam $signal, @pids;
 
 =head1 DESCRIPTION

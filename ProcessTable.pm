@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.35';
+$VERSION = '0.36';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -55,12 +55,14 @@ sub new
   my $self = {};
   bless $self, $class;
 
+  mutex_new(1);
   if ( exists $args{cache_ttys} && $args{cache_ttys} == 1 )
   { 
     $self->{cache_ttys} = 1 
   }
 
   my $status = $self->initialize;
+  mutex_new(0);
   if($status)
   {
     return $self; 
@@ -118,7 +120,7 @@ sub _get_tty_list
   undef %Proc::ProcessTable::TTYDEVS;
   find({ wanted => 
        sub{
-	 $File::Find::prune = 1 if -d $_ && ! -r $_;
+	 $File::Find::prune = 1 if -d $_ && ! -x $_;
 	 my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
 	    $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
 	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name

@@ -17,12 +17,17 @@ char* OS_initialize(){
 /* FIXME we should get minimum info like process ID and ownership from
    file stat-- does this work for IOCTL-proc? Does it for FS-proc? It
    does on linux... */
-
+#include <sys/types.h>
 void OS_get_table(){
   DIR *procdir;
-  struct dirent *procdirp;
+  char p[sizeof(struct dirent) + 1024] ;
+  struct dirent *procdirp = (struct dirent *)p;
   int psdata;
   char pathbuf[MAXPATHLEN];
+  DIR *procdirlwp;
+  struct dirent *procdirlwpp;
+  char pathbuflwp[MAXPATHLEN];
+
 
 #if defined(PROC_FS)
   struct psinfo psbuf;
@@ -33,11 +38,12 @@ void OS_get_table(){
   /* variables to hold some values for bless_into_proc */
   char state[20]; 
   char pctcpu[7];
+  int numthr;
   char pctmem[7];
   
   if( (procdir = opendir( "/proc" )) == NULL ) return;
   
-  while( (procdirp = readdir(procdir)) != NULL ){
+  while( readdir_r(procdir, procdirp) != NULL ){
     
     /* Only look at this file if it's a proc id; that is, all numbers */
     if( strtok(procdirp->d_name, "0123456789") != NULL ){ continue; }
@@ -45,6 +51,17 @@ void OS_get_table(){
     /* Construct path of the form /proc/proc_number */
     strcpy( pathbuf, "/proc/"); 
     strcat( pathbuf, procdirp->d_name );
+    strcpy( pathbuflwp, pathbuf);
+    strcat( pathbuflwp, "/lwp/");
+    if( (procdirlwp = opendir( pathbuflwp )) != NULL ){
+      numthr = 0;
+      while( (procdirlwpp = readdir(procdirlwp)) != NULL ){
+      numthr++;
+      }
+      closedir(procdirlwp);
+    }
+    numthr = numthr - 2;
+
       
 #if defined(PROC_FS)
     strcat( pathbuf, "/psinfo" ); /* Solaris 2.6 has process info here */
@@ -138,6 +155,7 @@ void OS_get_table(){
 #endif
 		     pctmem,                 /* pctmem */
 		     psbuf.pr_psargs         /* cmndline */ 
+		     numthr                  /* numthr */ 
 		    );
     
   }
