@@ -114,7 +114,7 @@ void bless_into_proc(char* format, char** fields, ...){
 
       default:
 	croak("Unknown data format type returned from OS_get_table");
-	va_end; 
+	va_end(args); 
       }
     
     format++;
@@ -128,7 +128,7 @@ void bless_into_proc(char* format, char** fields, ...){
   /* push it onto the array */
   av_push(Proclist, blessed);
 
-  va_end;
+  va_end(args);
 }
 
 /**********************************************************************/

@@ -3,3 +3,5 @@ Revision history for Perl extension Proc::ProcessTable.
 0.01  Mon Jun  8 11:37:47 1998
 	- original version; created by h2xs 1.18
 
+0.03  Sun Jul 26 09:07:50 1998
+	- added argument to va_end to make linux-ppc work
