@@ -158,3 +158,9 @@ Revision history for Perl extension Proc::ProcessTable.
 0.31	Fri Jun  1 08:27:03 EDT 2001
 	- Removed bogus test code line from os/Linux.c that was
 	opening "/tmp/tedddi".
+
+0.32	Sun Aug 19 04:45:25 EDT 2001
+	-SunOS port from Shawn Clifford <shawn.a.clifford@lmco.com>. 
+	Patch from Thomas Linden <tom@daemon.de> for additional Linux
+	fields. Patch for bsdi from Nicolas Belan <belan@matranet.com>
+	to add cmndline. 

@@ -15,5 +15,5 @@ state            state of process
 started          time/day process started
 ttydev           path of process' tty
 ttynum           tty number of process
-
+cmndline	 command line of process
 

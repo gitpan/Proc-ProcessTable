@@ -1,11 +1,11 @@
-Proc::ProcessTable, version .31
+Proc::ProcessTable, version .32
 
 STATUS
 ======
 This is BETA software; it seems to work, but use at your own risk :) 
 
 Currently works on linux, solaris, aix, hpux, freebsd, irix, dec_osf,
-bsdi, netbsd and unixware 7.x. Please see the "README.osname" files
+bsdi, netbsd, unixware 7.x and SunOS. Please see the "README.osname" files
 for details on individual os implementations. Please see the file
 PORTING if you are interested in making it work on something
 else. Please see the file TODO for a list of issues that need to be
@@ -95,6 +95,9 @@ Tryggvi Farestveit <tryggvi@firmanet.is> Patch for Linux cmndline
 Steve Lidie <sol0@Lehigh.EDU>		Killfam.pm module
 David Good <dgood@stratasource.com>	Patch for 32-bit HPUX 11.0 support
 Martin Lucina <mato@catalyst.net.nz>	Unixware 7.x port
+Shawn Clifford <shawn.a.clifford@lmco.com> SunOS port
+Thomas Linden <tom@daemon.de>		Linux enhancements
+Nicolas Belan <belan@matranet.com>	Patch to add cmndline for bsdi
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.

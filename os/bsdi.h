@@ -16,6 +16,11 @@
 #include <time.h>
 #include <math.h>
 
+/* Grab the maximum argument length */
+#include <sys/syslimits.h>
+
+#define MAXARGLN	ARG_MAX
+
 /**********************************************************/
 /* Copyright (c) 1999, Magic Software Development, Inc.   */ 
 /* Author:  Sean Ray Eskins. <sean@gilasoft.com>          */
@@ -85,7 +90,7 @@ int roundit(int integer) {
 
 /* We need to pass in a cap for ignore, lower for store on object */
 /* We can just lc these! */
-static char Defaultformat[] = "iiiiiisissssssl";
+static char Defaultformat[] = "iiiiiisissssssls";
 
 /* Mapping of field to type */
 static char* Fields[] = {
@@ -131,10 +136,12 @@ static char* Fields[] = {
   "ttydev",
 #define F_TTYDEV 13
 
-  "ttynum"
+  "ttynum",
 #define F_TTYNUM 14
+  "cmndline"
+#define F_CMNDLINE 15
 
-#define F_LASTFIELD 14
+#define F_LASTFIELD 15
 };
 
 

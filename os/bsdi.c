@@ -30,6 +30,8 @@ void OS_get_table() {
   int SECSPERDAY = 24 * 3600;
   pid_t sesid;
   int length;
+  char cmndline[MAXARGLN+1];
+  char ** argv;
 
   /* for bless_into_proc */
   static char format[F_LASTFIELD + 1];
@@ -49,6 +51,7 @@ void OS_get_table() {
  
   /* Get the list of processes. */
   if ((procs = kvm_getprocs(kd, KERN_PROC_ALL, 0, &count)) == NULL) {
+	kvm_close(kd);
     fprintf(stderr, "kvm_getprocs: %s\n", kvm_geterr(kd));
     exit(1);
   }
@@ -59,7 +62,7 @@ void OS_get_table() {
     static struct pstats ps;
     static struct session seslead;
     strcpy(format, Defaultformat);
-
+	
     /* get ttydev */
     ttynum=procs[i].kp_eproc.e_tdev;
     ttydev=devname(ttynum, S_IFCHR);
@@ -145,6 +148,18 @@ void OS_get_table() {
       }
     }
 
+	/* retrieve the arguments */
+	cmndline[0] = '\0';
+	argv = kvm_getargv(kd, (const struct kinfo_proc *) &(procs[i]) , 0);
+	if (argv) {
+	  int j = 0;
+	  while (argv[j] && strlen(cmndline) <= MAXARGLN) {
+		strcat(cmndline, argv[j]);
+		strcat(cmndline, " ");
+		j++;
+	  }
+	}
+
     /* access everything else directly from the kernel, send it */
     /* into bless_into_proc */
     bless_into_proc( format,
@@ -163,8 +178,12 @@ void OS_get_table() {
                      state,
                      started,
                      ttydev,
-                     ttynum
+                     ttynum,
+					 cmndline
                      );
+  }
+  if (kd) {
+	kvm_close(kd);
   }
 }
     

@@ -75,7 +75,7 @@ struct procstat {
 
 /* We need to pass in a cap for ignore, lower for store on object */
 /* We can just lc these! */
-static char Defaultformat[] = "IIIIIIIIIIIIIIIIIIIIIISLSSSS";
+static char Defaultformat[] = "IIIIIIIIIIIIIIIIIIIIIISLSSSSSIIIIIIS";
 
 /* Mapping of field to type */
 static char* Fields[] = {
@@ -160,8 +160,32 @@ static char* Fields[] = {
   "pctmem",
 #define F_PCTMEM 26
 
-  "cmndline"
+  "cmndline",
 #define F_CMNDLINE 27
 
-#define F_LASTFIELD 27
+  "exec",
+#define F_EXEC 28
+
+  "euid",
+#define F_EUID 29
+
+  "suid", 
+#define F_SUID 30
+
+  "fuid",
+#define F_FUID 31
+
+  "egid", 
+#define F_EGID 32
+
+  "sgid", 
+#define F_SGID 33
+
+  "fgid",
+#define F_FGID 34
+
+  "cwd"
+#define F_CWD 35
+
+#define F_LASTFIELD 35
 };

@@ -52,3 +52,7 @@ hints/svr5.pl
 os/UnixWare.c
 os/UnixWare.h
 README.unixware
+os/SunOS.c
+os/SunOS.h
+hints/sunos.pl
+README.sunos

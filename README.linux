@@ -1,7 +1,13 @@
 SUPPORTED ATTRIBUTES
 ====================
   uid         UID of process
+  euid	      Effective UID of process
+  suid	      Saved UID of process
+  fuid 	      File UID of process
   gid         GID of process
+  egid	      Effective GID of process
+  sgid	      Saved GID of process
+  fgid 	      File GID of process
   pid         process ID
   ppid        parent process ID
   pgrp        process group
@@ -28,11 +34,9 @@ SUPPORTED ATTRIBUTES
   state       state of process
   pctmem      percent memory
   cmndline    full command line of process
+  exec        absolute filename (including path) of executed command
   ttydev      path of process's tty
-
-TODO
-====
-It would be nice to get the euid and egid like solaris.
+  cwd         current directory of process
 
 BUGS
 ====

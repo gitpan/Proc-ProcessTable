@@ -132,6 +132,18 @@ void OS_get_table(){
 
   size_t pagesize = getpagesize();
   
+  /* used by exec, added by scip */
+  size_t l_size;
+  char exec[ARG_MAX];
+
+  /* used by cwd, added by scip */
+  char curdir[ARG_MAX];
+
+  /* used by the euid/egid stuff, added by scip */
+  char entry[80];
+  int dummyid, euid, suid, fuid, egid, sgid, fgid, line_count, i;
+  char c;
+
   if( (procdir = opendir("/proc")) == NULL ){
     return;
   }
@@ -212,6 +224,66 @@ void OS_get_table(){
 	format[F_PCTMEM] = tolower(format[F_PCTMEM]); /* pctmem */ 
       }
 
+      /* 
+       * get the executable info, added by scip
+       * we do _not_ check if the readlink call failed, because
+       * we could simply not have permissions to read the link
+       * which then simply results in an empty "exec" field.
+       */
+      sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/exe");
+      l_size = readlink(pathbuf, exec, PATH_MAX);
+      exec[l_size] = '\0';
+      format[F_EXEC] = tolower(format[F_EXEC]);
+
+      
+
+      /*
+       * get the euid, egid and so on out of /proc/$$/status
+       * where the 2 lines in which we are interested in are:
+       * [5] Uid:    500     500     500     500
+       * [6] Gid:    500     500     500     500
+       * added by scip
+       */
+      sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/status");
+      if ( (fp = fopen( pathbuf, "r" )) != NULL) {
+	while ( (c = fgetc(fp)) != EOF ) {
+	  if (c == '\n') {
+	    entry[i] = '\0';
+	    i = -1;
+	    if (strncmp(entry, "Uid:", 4) == 0) {
+	      /* Uid: entry */
+	      sscanf(entry, "Uid: %d %d %d %d", &dummyid, &euid, &suid, &fuid); 
+	    }
+	    else if (strncmp(entry, "Gid:", 4) == 0) {
+	      /* Gid: entry */
+	      sscanf(entry, "Gid: %d %d %d %d", &dummyid, &egid, &sgid, &fgid);
+	    }
+	  }
+	  else {
+	    entry[i] = c;
+	  }
+	  i++;
+	}
+	fclose(fp);
+	format[F_EUID] = tolower(format[F_EUID]);
+	format[F_SUID] = tolower(format[F_SUID]);
+	format[F_FUID] = tolower(format[F_FUID]);
+	format[F_EGID] = tolower(format[F_EGID]);
+	format[F_SGID] = tolower(format[F_SGID]);
+	format[F_FGID] = tolower(format[F_FGID]);
+      }
+
+
+      /*
+       * get the cwd info, added by scip
+       */
+      sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/cwd");
+      l_size = readlink(pathbuf, curdir, PATH_MAX);
+      curdir[l_size] = '\0';
+      format[F_CWD] = tolower(format[F_CWD]);
+      
+
+
       /* get stuff out of /proc/PROC_ID/cmdline */
       sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/cmdline");
       if( (fp = fopen( pathbuf, "r" )) != NULL ){ 
@@ -269,7 +341,11 @@ void OS_get_table(){
 			 pctcpu,
 			 state,
 			 pctmem,
-			 cmndline
+			 cmndline,
+			 exec,
+			 euid, suid, fuid,
+			 egid, sgid, fgid,
+			 curdir
 			 );
       }
     }
