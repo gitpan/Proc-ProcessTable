@@ -10,6 +10,7 @@ README.linux
 README.solaris
 README.dec_osf
 README.bsdi
+README.netbsd
 PORTING
 TODO
 Process/Makefile.PL
@@ -22,6 +23,7 @@ hints/freebsd.pl
 hints/irix.pl
 hints/dec_osf.pl
 hints/bsdi.pl
+hints/netbsd.pl
 os/Linux.c
 os/Linux.h
 os/Solaris.c
@@ -37,4 +39,6 @@ os/DecOSF.c
 os/DecOSF.h
 os/bsdi.c
 os/bsdi.h
+os/NetBSD.c
+os/NetBSD.h
 t/process.t

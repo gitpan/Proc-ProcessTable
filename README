@@ -3,11 +3,12 @@ Proc::ProcessTable, version .16
 STATUS
 ======
 This is ALPHA software; use at your own risk. Currently works on
-linux, solaris, aix, hpux, freebsd, irix, dec_osf and bsdi. Please see
-the "README.osname" files for details on individual os
-implementations. Please see the file PORTING if you are interested in
-making it work on something else. Please see the file TODO for a list
-of issues that need to be addressed.
+linux, solaris, aix, hpux, freebsd, irix, dec_osf, bsdi and
+netbsd. Please see the "README.osname" files for details on individual
+os implementations. Please see the file PORTING if you are interested
+in making it work on something else. Please see the file TODO for a
+list of issues that need to be addressed.
+
 
 Comments, bug reports, patches and especially ports are greatly
 appreciated.
@@ -65,6 +66,7 @@ Peter ? <hooft@natlab.research.philips.com>	IRIX version patch
 Rolf Petter Halle <rph@nextel.no>		solaris nanosecond patch
 Bernhard Schmalhofer <Bernhard.Schmalhofer@fazi.de>	dec_osf port
 Sean Eskins <sean@gilasoft.com>				bsdi port
+Peter Reich <pr@alles.prima.de>				netbsd port
 
 COPYRIGHT
 =========

@@ -69,3 +69,9 @@ Revision history for Perl extension Proc::ProcessTable.
 	version of test code as well. Added bsdi port from Sean Eskins
 	<sean@gilasoft.com>. 
 
+0.17	Thu Aug 19 10:57:16 1999
+	- Fixed bug (at least for linux) in Makefile.PL that was
+	causing ProcessTable.xs not to be converted to ProcessTable.c; 
+	this was carelessly introduced by me with integration of the
+	port to dec_osf. Added port for netbsd from Peter Reich
+	<pr@alles.prima.de>.
