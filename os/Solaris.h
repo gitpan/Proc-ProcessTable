@@ -33,7 +33,11 @@
 
 /* Solaris is an all-or-nothing deal, all this stuff comes out of 
    one structure, so we don't need to dick around with the format much */
+#if defined(PROC_FS)
 static char Format[] = "iiiiiiiillllliilllslssss";
+#else
+static char Format[] = "iiiiiiiillllllllslssss";
+#endif
 
 /* Mapping of field to type */
 static char* Fields[] = {
@@ -52,8 +56,12 @@ static char* Fields[] = {
   "flags",
   "time",
   "ctime",
+
+#if defined(PROC_FS)
   "timensec",
   "ctimensec",
+#endif
+
   "size",
   "rss",
   "wchan",

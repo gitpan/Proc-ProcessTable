@@ -17,3 +17,4 @@ symlink "os/Solaris.c", "OS.c" || die "Could not link os/Solaris.c to os/OS.c\n"
 if( $1 > 5.5 ){
     $self->{DEFINE} = "-DPROC_FS";
 }
+

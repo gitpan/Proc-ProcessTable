@@ -109,3 +109,11 @@ Revision history for Perl extension Proc::ProcessTable.
 0.21	Fri Sep 10 12:32:13 1999
 	- Bug fix; new "fields" method was crapping out on everything
 	except Linux-Intel.
+
+0.22	Tue Oct  5 07:47:54 1999 
+	- Bug fix for Solaris; nanosecond process times are only
+	available on 2.6 (and above?); this was causing the module to
+	dump core on earlier systems. Also, size and rss appear to be
+	in kilobytes, not pages in 2.6 and above (they are in pages in 
+	the struct prpsinfo in < 2.6, but also available directly as
+	bytes). 
