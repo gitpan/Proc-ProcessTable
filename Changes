@@ -164,3 +164,13 @@ Revision history for Perl extension Proc::ProcessTable.
 	Patch from Thomas Linden <tom@daemon.de> for additional Linux
 	fields. Patch for bsdi from Nicolas Belan <belan@matranet.com>
 	to add cmndline. 
+
+0.33	Wed Oct 10 15:50:17 EDT 2001
+	-Fixed Solaris large file environment problem (by turning off
+	large file environment CCFLAGS!). Patches from Chris Adams
+	<cmadams@hiwaay.net> for TTYs with device number(s) zero and
+	Digital Unix table() call to read processes. Added
+	README.taint for workarounds for perl -T. Changed umask for
+	644 permissions for /tmp/TTYDEVS.
+
+

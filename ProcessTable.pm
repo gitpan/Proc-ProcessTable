@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.32';
+$VERSION = '0.33';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -44,6 +44,7 @@ bootstrap Proc::ProcessTable $VERSION;
 # Preloaded methods go here.
 use Proc::ProcessTable::Process;
 use File::Find;
+use POSIX;
 
 my %TTYDEVS;
 my $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
@@ -90,7 +91,10 @@ sub initialize
     else
     {
       $self->_get_tty_list;
+      my $old_umask = umask;
+      umask 022;
       Storable::store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
+      umask $old_umask;
     }
   }
   else
@@ -118,7 +122,8 @@ sub _get_tty_list
 	 $File::Find::prune = 1 if -d $_ && ! -r $_;
 	 my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
 	    $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
-	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name if($rdev);
+	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name
+	   if(S_ISCHR($mode));
        },
        "/dev" 
       );

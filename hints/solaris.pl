@@ -18,3 +18,8 @@ if( $1 > 5.5 ){
     $self->{DEFINE} = "-DPROC_FS";
 }
 
+# For reasons I don't understand, we have to turn off the large file
+# environment flags in order to compile in the large file environment
+if( `/usr/bin/getconf LFS_CFLAGS` =~ /-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64/){
+    $self->{CCFLAGS} = " ";
+}

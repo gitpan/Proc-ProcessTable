@@ -6,6 +6,7 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <sys/proc.h> /* needed for process state constants */
+#include <sys/table.h> /* needed for process state constants */
 #include <sys/statvfs.h>
 #include <sys/types.h>
 #include <sys/procfs.h>
@@ -14,6 +15,9 @@
 #undef SP
 #define SP sp
 #endif
+
+/* How many processes to get at once from table() */
+#define PROCCNT 64
 
 /****************************************/
 /* Process state strings that we return */

@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .32
+Proc::ProcessTable, version .33
 
 STATUS
 ======
@@ -90,7 +90,9 @@ Slaven Rezic <eserte@cs.tu-berlin.de>	Patch to make test script -w clean
 Wolfgang Friebel <Wolfgang.Friebel@desy.de> HPUX time patch
 Adrian Phillips <tandem@dnmi.no>	AIX cmndline patch
 Chris Adams <cmadams@hiwaay.net>	Patch for array return
-					support, new fields on Dec OSF
+					support, new fields on Dec OSF.
+					Patches for TTYs with device #0 and 
+					using table() to get procs on Dec.
 Tryggvi Farestveit <tryggvi@firmanet.is> Patch for Linux cmndline
 Steve Lidie <sol0@Lehigh.EDU>		Killfam.pm module
 David Good <dgood@stratasource.com>	Patch for 32-bit HPUX 11.0 support

@@ -1,3 +1,6 @@
+- Fix taint problem (won't run under perl -T; problem with
+File::Find). Workarounds currently in README.taint.
+
 - "pctcpu" means different things on different systems. On linux, it
 means percent CPU used by a process since its start; on Solaris, it
 means a recent average of percent CPU ala top (the kernel provides
@@ -7,11 +10,6 @@ deprecated and it should be replaced in each module by one of three
 fields: pctcpu_r for recent usage, pctcpu_s for since process start,
 and pctcpu_b for since boot. Then, where possible, the other fields
 should be populated (we should look at how top does recent usage).
-
-- The module doesn't currently compile in the Solaris Large File
-environment; this should be easy to fix (see
-README.solaris_large_file_env) but I don't have a Soalris machine to
-work on at the moment.
 
 - Since a lot of systems seem to support microsecond resolution, all
 times should probably be handled in microseconds. The problem of

@@ -24,15 +24,17 @@ char* OS_initialize()
 
 void OS_get_table()
 {
-  DIR *procdir;
-  struct dirent *procdirp;
+  int maxproc, procnum, procbase;
   int psdata;
   char pathbuf[MAXPATHLEN];
+
+  /* defined in <sys/table.h> */
+  struct tbl_procinfo pstbl[PROCCNT];
 
   /* defined in <sys/procfs.h> */
   struct prpsinfo psbuf;
   struct prcred pscredbuf;
-  
+
   /* variables to hold some values for bless_into_proc */
   char state[20]; 
   char pctcpu[7];
@@ -42,22 +44,30 @@ void OS_get_table()
   int i;
   AV *group_array;
   SV *group_ref;
-  
-  if( (procdir = opendir( "/proc" )) == NULL ) return;
-  
-  /* loop over all "files" in procdir */
-  while( (procdirp = readdir(procdir)) != NULL )
+
+  if( (maxproc = table( TBL_PROCINFO, 0, NULL, (unsigned int) -1, 0 )) == -1 )
+    return;
+
+  /* loop over all processes */
+  procbase = -1;
+  for( procnum = 0; procnum < maxproc; procnum ++)
   {
-    /* Only look at this file if it's a proc id; that is, all numbers */
-    if( strtok(procdirp->d_name, "0123456789") != NULL )
-    { 
-      continue; 
+    /* Get the table entries */
+    if( (procbase < 0) || (procnum >= (procbase + PROCCNT)) )
+    {
+      procbase = procnum;
+      if( table( TBL_PROCINFO, procbase, pstbl, PROCCNT,
+	  sizeof (struct tbl_procinfo)) == -1 )
+	continue;
     }
-      
+
+    /* See if the process exists */
+    if( pstbl[procnum % PROCCNT].pi_status == PI_EMPTY )
+      continue;
+
     /* Construct path of the form /proc/proc_number */
-    strcpy( pathbuf, "/proc/"); 
-    strcat( pathbuf, procdirp->d_name );
-      
+    sprintf( pathbuf, "/proc/%d", procnum );
+
     if( (psdata = open( pathbuf, O_RDONLY )) == -1 ) continue;
 
     if( ioctl(psdata, PIOCPSINFO, &psbuf) == -1 ) continue; 
@@ -114,7 +124,7 @@ void OS_get_table()
 
     bless_into_proc( Format,           
                      Fields,
-                     
+
                      psbuf.pr_uid,           /* uid, uid_t is int */
                      psbuf.pr_gid,           /* gid, gid_t is int */
 		     pscredbuf.pr_euid,      /* euid, uid_t is int */
@@ -138,7 +148,6 @@ void OS_get_table()
                      state,                  /* state */
                      psbuf.pr_psargs         /* cmndline */ 
                    );
-    
+
   }
-  closedir(procdir);
 }

@@ -1,0 +1,27 @@
+Problems have been reported when using this module with taint checking
+on (perl -T). The problem seems to be associated with the use of
+File::Find to build the TTY mapping.
+
+Possible solutions are: 
+
+1) Delete the offending environment variable(s) at the start of your
+script. For instance, if the script fails under taint checking with an
+error like this:
+
+Insecure $ENV{BASH_ENV} while running with -T switch at
+/usr/lib/perl5/5.6.0/Cwd.pm line 85.
+
+then try 
+
+delete $ENV{'BASH_ENV'};
+
+at the start of the script.
+
+2) Run a separate script without taint checking that just builds the
+TTY mapping. This should just call the constructor with the
+"cache_ttys" option, like this: 
+
+$p = new Proc::ProcessTable( 'cache_ttys' => 1 );
+
+If anyone has a better solution (that doesn't invlolve rewriting
+File::Find!) please send me a patch!
