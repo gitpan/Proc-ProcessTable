@@ -1,6 +1,6 @@
 package Proc::ProcessTable;
 
-require 5.004_05;
+require 5.004;
 
 use strict;
 use Carp;
@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()

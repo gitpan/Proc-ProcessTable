@@ -8,6 +8,13 @@ extern "C" {
 }
 #endif
 
+
+/* As of version 5.005_something it seems */
+/* sv_undef is no longer supported */
+#if PATCHLEVEL < 5
+      #define PL_sv_undef sv_undef
+#endif
+
 /********************/
 /* General includes */
 /********************/

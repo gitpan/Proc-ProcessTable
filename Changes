@@ -34,3 +34,8 @@ Revision history for Perl extension Proc::ProcessTable.
 	to fix occasional problems with mod_perl. Changed all instances of
 	sv_undef in ProcessTable.xs to PL_sv_undef to comply with new 
 	standard.
+
+0.10	Sat Feb 20 11:29:35 1999
+	- Added code to ProcessTable.xs to check perl patchlevel version
+	and use either PL_sv_undef or sv_undef since lots of people are
+	still using older versions of perl.
