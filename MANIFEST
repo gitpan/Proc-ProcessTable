@@ -6,6 +6,7 @@ ProcessTable.xs
 test.pl
 README
 README.aix
+README.freebsd
 README.linux
 README.solaris
 PORTING
@@ -16,6 +17,7 @@ hints/linux.pl
 hints/solaris.pl
 hints/aix.pl
 hints/hpux.pl
+hints/freebsd.pl
 os/Linux.c
 os/Linux.h
 os/Solaris.c
@@ -23,3 +25,5 @@ os/Solaris.h
 os/aix.c
 os/aix.h
 os/HPUX.c
+os/FreeBSD.c
+os/FreeBSD.h

@@ -198,13 +198,18 @@ void OS_get_table(){
       }
 
       /* get stuff out of /proc/PROC_ID/cmdline */
-      cmndline[0] = '\0';
       sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/cmdline");
       if( (fp = fopen( pathbuf, "r" )) != NULL ){ 
-	int i;
-	fgets(cmndline, FILENAME_MAX, fp);
-	fclose(fp);
-	if(strlen(cmndline)) format[F_CMNDLINE] = tolower(format[F_CMNDLINE]); /* cmndline */
+	size_t got;
+	if( (got = fread(cmndline, sizeof(char), ARG_MAX, fp)) > 0 ){
+	  size_t i;
+	  for(i = 0; i < got; i++){
+	    if( cmndline[i] == '\0' ) cmndline[i] = ' ';
+	  }
+	  cmndline[got] = '\0'; /* necessary? */
+
+	  format[F_CMNDLINE] = tolower(format[F_CMNDLINE]);
+	}
       }
 
       /* Make sure our format is not all x's, which happens

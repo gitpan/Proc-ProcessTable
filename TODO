@@ -15,3 +15,6 @@ set of attributes with consistent units that all OS modules should
 support. Maybe this should be part of a firmer spec than what's in the 
 PORTING file.
 
+- Ports to IRIX, SCO, Digital Unix and NT (if possible) would be nice.
+
+- Porting the API to TCL and Python would be nice (shouldn't be hard).
