@@ -155,3 +155,6 @@ Revision history for Perl extension Proc::ProcessTable.
        7.x from Martin Lucina <mato@catalyst.net.nz>. Upgraded status
        to beta :)
 
+0.31	Fri Jun  1 08:27:03 EDT 2001
+	- Removed bogus test code line from os/Linux.c that was
+	opening "/tmp/tedddi".

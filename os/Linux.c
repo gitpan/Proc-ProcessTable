@@ -118,7 +118,7 @@ void OS_get_table(){
   char pathbuf[PATH_MAX];
   struct stat filestat;
   FILE* fp;
-  FILE *fdtest = fopen("/tmp/tedddi", "a");
+  /* FILE *fdtest = fopen("/tmp/tedddi", "a"); */
 
   /* for bless_into_proc */
   struct procstat prs; 
