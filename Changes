@@ -46,3 +46,6 @@ Revision history for Perl extension Proc::ProcessTable.
 	there, since it's not clear what patchlevel we need to check for. 
 	Also fixed embarrassing and unnecessary call to close() a string in 
 	Solaris.c
+
+0.12	Sun Mar 21 10:53:56 1999
+	- Hopefully the final fix for the sv_undef buglet.
