@@ -6,6 +6,7 @@ ProcessTable.xs
 test.pl
 README
 PORTING
+Process/Makefile.PL
 Process/Process.pm
 hints/linux.pl
 os/Linux.c
