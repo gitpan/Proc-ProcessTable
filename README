@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .18
+Proc::ProcessTable, version .20
 
 STATUS
 ======
@@ -37,6 +37,9 @@ With this module, you can do things like this:
           }		
         }
 
+There is another short example in the file "example.pl" in the
+distribution. 
+
 INSTALLATION
 ============
 This module needs the File::Find and Storable modules in order to
@@ -58,7 +61,7 @@ ACKNOWLEDGEMENTS
 Thanks to the many people who sent in patches to help get the solaris
 version to build. Thanks especially to the following contributors:
 
-David Paquet <david-paquet@usa.net>		AIX port
+David Paquet <David.Paquet@cnes.fr>		AIX port
 Mike Romberg <romberg@fsl.noaa.gov>		HPUX port
 Slaven Rezic <eserte@cs.tu-berlin.de>		FreeBSD port
 W. Phillip Moore <wpm@ms.com>			IRIX port

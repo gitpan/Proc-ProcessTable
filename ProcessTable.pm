@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.18';
+$VERSION = '0.20';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -113,6 +113,7 @@ sub _get_tty_list
   undef %Proc::ProcessTable::TTYDEVS;
   find(
        sub{
+	 $File::Find::prune = 1 if -d $_ && ! -r $_;
 	 my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
 	    $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
 	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name if($rdev);
@@ -136,6 +137,7 @@ Proc::ProcessTable - Perl extension to access the unix process table
   use ProcessTable;
 
   $p = new Proc::ProcessTable( 'cache_ttys' => 1 ); 
+  @fields = $p->fields;
   $ref = $p->table;
 
 =head1 DESCRIPTION
@@ -154,6 +156,11 @@ cache_ttys -- causes the constructor to look for and use a file that
 caches a mapping of tty names to device numbers, and to create the
 file if it doesn't exist (this file is /tmp/TTYDEVS by default). This
 feature requires the Storable module.
+
+=item fields
+
+Returns a list of the field names supported by the module on the
+current architecture.
 
 =item table
 
@@ -185,6 +192,20 @@ are supported directly by internal perl functions.
           scalar(localtime($p->start)), 
           $p->cmndline);
  }
+
+
+ # Dump all the information in the current process table
+ use Proc::ProcessTable;
+
+ $t = new Proc::ProcessTable;
+
+ foreach $p (@{$t->table}) {
+  print "--------------------------------\n";
+  foreach $f ($t->fields){
+    print $f, ":  ", $p->{$f}, "\n";
+  }
+ }              
+
 
 =head1 CAVEATS
 

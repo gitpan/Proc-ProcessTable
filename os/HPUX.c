@@ -3,6 +3,9 @@
  * This file may be distributed under the same terms as Perl.
  *
  * This will probably only work under HPUX-10 or later.
+ *
+ * 8/26/99 Added "fname" field for consistency with other OS's - D. Urist
+ *
  */
 
 #include <stdlib.h>
@@ -14,7 +17,7 @@
 extern void bless_into_proc(char* format, char** fields, ...);
 
 static char *Format = 
-"llllllllllllllllsllsllllsllslllllllllllllllllllllSSSllllSSSll";
+"llllllllllllllllsllssllllsllslllllllllllllllllllllSSSllllSSSll";
 
 static char *Fields[] = {
 "uid",
@@ -37,6 +40,7 @@ static char *Fields[] = {
 "wchan",
 "procnum",
 "cmd",
+"fname", 
 "time",
 "cpticks",
 "cptickstotal",
@@ -122,6 +126,7 @@ void OS_get_table()
               States[pst[i].pst_stat],
               pst[i].pst_wchan,
               pst[i].pst_procnum,
+              pst[i].pst_cmd,
               pst[i].pst_cmd,
               pst[i].pst_time,
               pst[i].pst_cpticks,

@@ -16,6 +16,7 @@ WriteMakefile(
     'DEFINE'	=> '',     # e.g., '-DHAVE_SOMETHING' 
     'INC'	=> '',     # e.g., '-I/usr/include/other' 
     'LDFROM'    => '$(O_FILES)',
+    'OBJECT'    => 'ProcessTable.o OS.o',
     'PREREQ_PM'    => { 'File::Find' => 0, 'Storable' => 0 },
     'clean'     => { FILES => 'OS.c' },
     'dist' => { COMPRESS=>"gzip", SUFFIX=>"gz" }

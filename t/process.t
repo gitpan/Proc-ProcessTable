@@ -11,14 +11,19 @@ use Proc::ProcessTable;
 # Test code
 
 $SIG{CHLD} = sub{wait;};
-my ( $got );
+my ( $got, $field );
 
 my $t = new Proc::ProcessTable;
 
 # Is there a process called cron
 foreach $got ( @{$t->table} )
 {
-  print STDERR $got->pid, "  ", $got->fname, "\n";
+#  print STDERR $got->pid, "  ", $got->fname, "\n";
+  print STDERR "--------------------------------\n";
+  foreach $field ($t->fields){
+    print STDERR $field, ":  ", $got->{$field}, "\n";
+  }
+
 }
 
 # fork a child process

@@ -59,7 +59,9 @@ It would be nice to maintain some consistency in the fields returned
 minimal set of fields would be supported for all operating systems,
 with whatever other information is useful and easy to gather. Field
 names at least should be consistent, as should the names for process
-states as far as possible.
+states as far as possible. PLEASE make the basic field names as
+consistent as possible with those listed in the "README.linux" file in
+the distribution so that scripts will work across operating systems. 
 
 These fields have some special handling:
 

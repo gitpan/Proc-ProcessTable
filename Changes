@@ -81,3 +81,27 @@ Revision history for Perl extension Proc::ProcessTable.
 	this was carelessly introduced by me with integration of the
 	port to dec_osf. Added port for netbsd from Peter Reich
 	<pr@alles.prima.de>.
+
+0.19	Mon Aug 30 00:22:02 1999
+	- Reinstated 'OBJECT' argument in WriteMakefile in Makefile.PL 
+	since it was breaking the build on dec-osf, but this time with 
+	explicit object files to look for which seems to work, at
+	least under Linux. Why this should be necessary is
+	unclear. Added "fname" field to HPUX (was "cmd") for
+	consistency with other ports and for new test. Added very
+	basic "README.hpux". Added check in ProcessTable.pm to prune
+	search tree for unreadable directories when finding TTY list;
+	this was causing spurious errors during build on dec_osf
+	since some directories under /dev are readable only by root.
+
+0.20	Wed Sep  8 22:27:28 1999
+	- Added "fields" method to module to return list of fields
+	supported for the current architecture. This is implemented in 
+	a slightly kludgy way, since it needs to call the table method 
+	if the table method hasn't been called before, since only the
+	table method knows the names of the fields. Also changed the
+	test code to dump all the fields/values available for the
+	current process table, instead of just dumping pids and
+	"fname" which isn't supported on all architectures (though it
+	should be). Added "example.pl" file which contains the same
+	code. 

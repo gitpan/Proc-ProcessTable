@@ -30,6 +30,10 @@ void bless_into_proc(char* , char**, ...);
 void OS_get_table();
 char* OS_initialize();
 
+/* NEW  */
+char** Fields = NULL; 
+int Numfields;
+
 /* Cache a pointer the TTY device number hash for quick lookups */
 HV* Ttydevs;
 
@@ -78,6 +82,12 @@ void bless_into_proc(char* format, char** fields, ...){
   SV* ref;
   HV* mystash;
   SV* blessed;
+
+  /* Blech */
+  if(Fields == NULL){
+    Fields = fields; 
+    Numfields = strlen(format);
+  }
 
   myhash = newHV(); /* create a perl hash */
 
@@ -214,6 +224,27 @@ table(obj)
      
      OUTPUT:
      RETVAL
+
+void
+fields(obj)
+     SV*  obj
+     PPCODE:
+
+     int i;
+     SV* my_sv;
+
+     if( Fields == NULL ){
+       PUSHMARK(SP);
+       XPUSHs(obj);
+       PUTBACK;
+       perl_call_method("table", G_DISCARD);
+     }
+
+     for (i=0; i < Numfields; i++ ){
+       EXTEND(SP,1);
+       sv_setpv(my_sv,Fields[i]);
+       PUSHs(sv_2mortal(newSVsv( my_sv )));
+     }
 
 void 
 _initialize_os(obj)
