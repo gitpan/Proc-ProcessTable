@@ -13,12 +13,12 @@ SUPPORTED ATTRIBUTES
   cminflt     child minor page faults        
   majflt      major page faults              
   cmajflt     child major page faults        
-  utime       user mode time (1/100s of seconds)
-  stime       kernel mode time                  
-  cutime      child utime                       
-  cstime      child stime                       
-  time        user + system time                 
-  ctime       child user + system time
+  utime       user mode time (microseconds)
+  stime       kernel mode time (microseconds)      
+  cutime      child utime (microseconds)
+  cstime      child stime (microseconds)
+  time        user + system time (microseconds)
+  ctime       child user + system time (microseconds)
   size        virtual memory size (bytes)
   rss         resident set size (bytes)
   wchan       address of current system call 
@@ -36,6 +36,6 @@ It would be nice to get the euid and egid like solaris.
 
 BUGS
 ====
-Times are in "jiffies" (1/100 second); this should probably be changed
-to microseconds since both solaris and aix can support microsecond
-resolution. 
+Though times are now converted to microseconds, they are limited to jiffie
+resolution.  A jiffie is 100 Hertz on most platforms, 1024 Hertz on Alpha. 
+    -Philip Gwyn

@@ -19,4 +19,5 @@ SUPPORTED ATTRIBUTES
   start       start time (seconds since the epoch)
   state       state of process
   ttydev      path of process's tty
-
+  cmndline    full command line of process
+  priority    priority of process

@@ -1,3 +1,5 @@
+#include <fcntl.h>
+#include <asm/param.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>

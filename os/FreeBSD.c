@@ -55,11 +55,14 @@ char* OS_initialize(){
 void OS_get_table(){
   DIR *procdir;
   struct dirent *procdirp;
+  FILE *fp;
   char pathbuf[PATH_MAX];
 
   /* for bless_into_proc */
   struct procstat prs; 
-  static char format[F_LASTFIELD + 1];
+  static char format[F_LASTFIELD + 2];
+  char cmndline[ARG_MAX];
+  int priority;
 
   if( (procdir = opendir("/proc")) == NULL ){
     return;
@@ -105,6 +108,28 @@ void OS_get_table(){
 	ttydev = devname(ttynum, S_IFCHR);
 	if (ttydev == NULL) ttydev = "??";
 
+	/* get stuff out of /proc/PROC_ID/cmdline */
+	sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/cmdline");
+	if( (fp = fopen( pathbuf, "r" )) != NULL ){ 
+	  size_t got;
+	  if( (got = fread(cmndline, sizeof(char), ARG_MAX, fp)) > 0 ){
+	    size_t i;
+	    for(i = 0; i < got; i++){
+	      if( cmndline[i] == '\0' ) cmndline[i] = ' ';
+	    }
+	    cmndline[got] = '\0'; /* necessary? */
+	    
+	    format[F_CMNDLINE] = tolower(format[F_CMNDLINE]);
+	  }
+	  fclose(fp);
+	}
+
+	// get priority
+	errno = 0;
+	priority = getpriority(PRIO_PROCESS, prs.pid);
+	if (!errno)
+	  format[F_PRIORITY] = tolower(format[F_PRIORITY]);
+
 	bless_into_proc( format,
 			 Fields,
 			 prs.ruid,
@@ -124,7 +149,9 @@ void OS_get_table(){
 			 prs.comm,
 			 prs.wchan,
 			 ttydev,
-			 ttynum
+			 ttynum,
+			 cmndline,
+			 priority
 			 );
       }
     }

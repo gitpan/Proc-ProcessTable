@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.26';
+$VERSION = '0.27';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -44,7 +44,6 @@ bootstrap Proc::ProcessTable $VERSION;
 # Preloaded methods go here.
 use Proc::ProcessTable::Process;
 use File::Find;
-use Storable qw(store retrieve);
 
 my %TTYDEVS;
 my $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
@@ -80,15 +79,18 @@ sub initialize
   # reading/writing the cache if we are caching
   if( $self->{cache_ttys} )
   {
+
+    require Storable;
+
     if( -r $TTYDEVSFILE )
     {
-      $_ = retrieve($TTYDEVSFILE);
+      $_ = Storable::retrieve($TTYDEVSFILE);
       %Proc::ProcessTable::TTYDEVS = %$_;
     }
     else
     {
       $self->_get_tty_list;
-      store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
+      Storable::store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
     }
   }
   else

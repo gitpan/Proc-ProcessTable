@@ -130,7 +130,7 @@ void bless_into_proc(char* format, char** fields, ...){
 	break;
 
       default:
-	croak("Unknown data format type returned from OS_get_table");
+	croak("Unknown data format type `%c' returned from OS_get_table", *format);
 	va_end(args); 
       }
     

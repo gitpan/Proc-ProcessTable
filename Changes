@@ -130,3 +130,9 @@ Revision history for Perl extension Proc::ProcessTable.
 
 0.26	Fri Feb 11 16:43:48 2000
 	- Added Proc::Killall from Aaraon Sherman <ajs@ajs.com>.
+
+0.27	Thu Jun 29 08:27:23 2000
+	- Added patch for converting jiffies to microseconds in linux
+	from Philip Gwyn <fil@pied.nu>. Added patch from Slaven Rezic
+	<eserte@cs.tu-berlin.de> for FreeBSD and to make Storable
+	optional. 

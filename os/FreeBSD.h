@@ -2,8 +2,11 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include <ctype.h>
 #include <dirent.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,7 +36,7 @@ struct procstat {
 
 /* We need to pass in a cap for ignore, lower for store on object */
 /* We can just lc these! */
-static char Defaultformat[] = "iiiiiissssssiisssi";
+static char Defaultformat[] = "iiiiiissssssiisssiSI";
 
 /* Mapping of field to type */
 static char* Fields[] = {
@@ -88,8 +91,14 @@ static char* Fields[] = {
   "ttydev",
 #define F_TTYDEV 16
 
-  "ttynum"
+  "ttynum",
 #define F_TTYNUM 17
 
-#define F_LASTFIELD 17
+  "cmndline",
+#define F_CMNDLINE 18
+
+  "priority"
+#define F_PRIORITY 19
+  
+#define F_LASTFIELD 19
 };

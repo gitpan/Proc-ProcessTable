@@ -1,6 +1,11 @@
 
 #include "os/Linux.h"
 
+unsigned long Hertz;
+
+#define JIFFIES_TO_MICROSECONDS(x) ((1000*(x))/Hertz)
+static int init_Hertz_value(void);
+
 /* Given a path to a /proc/XXX/stat file and a pointer to a procstat
    struct, fill the struct */
 struct procstat* get_procstat( char* path, struct procstat* prs){
@@ -46,6 +51,12 @@ struct procstat* get_procstat( char* path, struct procstat* prs){
 	   &prs->wchan
 	   );
     fclose(fp);
+    prs->utime = JIFFIES_TO_MICROSECONDS(prs->utime); 
+    prs->stime = JIFFIES_TO_MICROSECONDS(prs->stime); 
+    prs->cutime = JIFFIES_TO_MICROSECONDS(prs->cutime); 
+    prs->cstime = JIFFIES_TO_MICROSECONDS(prs->cstime); 
+    prs->starttime = JIFFIES_TO_MICROSECONDS(prs->starttime); 
+    prs->timeout = JIFFIES_TO_MICROSECONDS(prs->timeout); 
     return(prs);
   }
   else{
@@ -95,8 +106,11 @@ char* OS_initialize(){
     Sysmem = 0;
   }
 
+  init_Hertz_value();
   return NULL;
 }
+
+
 
 void OS_get_table(){
   DIR *procdir;
@@ -152,15 +166,15 @@ void OS_get_table(){
         strcpy(fname, strtok(prs.comm, "()"));
 	format[F_FNAME] = tolower(format[F_FNAME]); /* fname */
 
-	/* start is in 100ths of seconds since boot; convert to unix time */
+	/* starttime is micro-seconds since boot; convert to unix time */
 	if( Btime != 0 ){
-	  start = ( prs.starttime / 100 ) + Btime;
+	  start = (prs.starttime/1000) + Btime;
 	  format[F_START] = tolower(format[F_START]); /* start */
 	}
 
 	/* calculate pctcpu */
 	pctcpu[0] = '\0';
-	sprintf( pctcpu, "%3.2f", (float) ((prs.utime + prs.stime) * 100) / (( time(NULL) - start ) * 100));
+	sprintf( pctcpu, "%3.2f", (float) ((prs.utime + prs.stime)/10) / (( time(NULL) - start ) ));
 	format[F_PCTCPU] =  tolower(format[F_PCTCPU]); /* pctcpu */
 
 	/* convert character state into one of our "official" readable
@@ -257,3 +271,108 @@ void OS_get_table(){
   closedir(procdir);
 }
 
+
+
+  /* Get Hertz to convert jiffies to seconds */
+  /* LIFTED FROM procps 2.0.2 */
+#define BAD_OPEN_MESSAGE                                        \
+"Error: /proc must be mounted\n"                                \
+"  To mount /proc at boot you need an /etc/fstab line like:\n"  \
+"      /proc   /proc   proc    defaults\n"                      \
+"  In the meantime, mount /proc /proc -t proc\n"
+
+#define STAT_FILE    "/proc/stat"
+static int stat_fd = -1;
+#define UPTIME_FILE  "/proc/uptime"
+static int uptime_fd = -1;
+#define LOADAVG_FILE "/proc/loadavg"
+static int loadavg_fd = -1;
+#define MEMINFO_FILE "/proc/meminfo"
+static int meminfo_fd = -1;
+
+static char buf[1024];
+
+/* This macro opens filename only if necessary and seeks to 0 so
+ * that successive calls to the functions are more efficient.
+ * It also reads the current contents of the file into the global buf.
+ */
+#define FILE_TO_BUF(filename, fd) do{                           \
+    static int n;                                               \
+    if (fd == -1 && (fd = open(filename, O_RDONLY)) == -1) {    \
+        fprintf(stderr, BAD_OPEN_MESSAGE);                      \
+        close(fd);                                              \
+        return 0;                                               \
+    }                                                           \
+    lseek(fd, 0L, SEEK_SET);                                    \
+    if ((n = read(fd, buf, sizeof buf - 1)) < 0) {              \
+        perror(filename);                                       \
+        close(fd);                                              \
+        fd = -1;                                                \
+        return 0;                                               \
+    }                                                           \
+    buf[n] = '\0';                                              \
+}while(0)
+                                                                                       
+/***********************************************************************
+ * Some values in /proc are expressed in units of 1/HZ seconds, where HZ
+ * is the kernel clock tick rate. One of these units is called a jiffy.
+ * The HZ value used in the kernel may vary according to hacker desire.
+ * According to Linus Torvalds, this is not true. He considers the values
+ * in /proc as being in architecture-dependant units that have no relation
+ * to the kernel clock tick rate. Examination of the kernel source code
+ * reveals that opinion as wishful thinking.
+ *
+ * In any case, we need the HZ constant as used in /proc. (the real HZ value
+ * may differ, but we don't care) There are several ways we could get HZ:
+ *
+ * 1. Include the kernel header file. If it changes, recompile this library.
+ * 2. Use the sysconf() function. When HZ changes, recompile the C library!
+ * 3. Ask the kernel. This is obviously correct...
+ *
+ * Linus Torvalds won't let us ask the kernel, because he thinks we should
+ * not know the HZ value. Oh well, we don't have to listen to him.
+ * Someone smuggled out the HZ value. :-)
+ *
+ * This code should work fine, even if Linus fixes the kernel to match his
+ * stated behavior. The code only fails in case of a partial conversion.
+ *
+ */
+
+static int init_Hertz_value(void) {
+
+  unsigned long user_j, nice_j, sys_j, other_j;  /* jiffies (clock ticks) */
+  double up_1, up_2, seconds;
+  unsigned long jiffies, h;
+  do{
+    FILE_TO_BUF(UPTIME_FILE,uptime_fd);  sscanf(buf, "%lf", &up_1);
+    /* uptime(&up_1, NULL); */
+    FILE_TO_BUF(STAT_FILE,stat_fd);
+    sscanf(buf, "cpu %lu %lu %lu %lu", &user_j, &nice_j, &sys_j, &other_j);
+    FILE_TO_BUF(UPTIME_FILE,uptime_fd);  sscanf(buf, "%lf", &up_2);
+    /* uptime(&up_2, NULL); */
+  } while((long)( (up_2-up_1)*1000.0/up_1 )); /* want under 0.1% error */
+  jiffies = user_j + nice_j + sys_j + other_j;
+  seconds = (up_1 + up_2) / 2;
+  h = (unsigned long)( (double)jiffies/seconds );
+  switch(h){
+    case   48 ...   52 :  Hertz =   50; break;
+    case   58 ...   62 :  Hertz =   60; break;
+    case   95 ...  105 :  Hertz =  100; break; /* normal Linux */
+    case  124 ...  132 :  Hertz =  128; break;
+    case  195 ...  204 :  Hertz =  200; break; /* normal << 1 */
+    case  253 ...  260 :  Hertz =  256; break;
+    case  393 ...  408 :  Hertz =  400; break; /* normal << 2 */
+    case  790 ...  808 :  Hertz =  800; break; /* normal << 3 */
+    case  990 ... 1010 :  Hertz = 1000; break;
+    case 1015 ... 1035 :  Hertz = 1024; break; /* Alpha */
+    default:
+#ifdef HZ
+      Hertz = (unsigned long)HZ;    /* <asm/param.h> */
+#else
+      Hertz = (sizeof(long)==sizeof(int)) ? 100UL : 1024UL;
+#endif
+      fprintf(stderr, "Unknown HZ value! (%ld) Assume %ld.\n", h, Hertz);
+  }
+  return 0; /* useless, but FILE_TO_BUF has a return in it */
+}
+#include <fcntl.h>
