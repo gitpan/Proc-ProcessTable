@@ -25,12 +25,10 @@ SUPPORTED ATTRIBUTES
   ttydev      path of process's tty
 
 
-TODO
-====
-From the pstatus structure available from /proc we could get utime,
-stime, cutime and cstime. 
-
 BUGS
 ====
-Times for the "time" and "ctime" fields are in seconds; this is both
-inconsistent with the linux module (1/100 seconds) and really crude. 
+There is an 80-character limit for the cmndline field; this is a
+limitation of the Solaris proc filesystem (at least up to Solaris
+2.7). The only way to get at commandlines longer than that is to read
+/dev/kmem, which would be a major pain. Hopefully sun will fix this at
+some point in the future.

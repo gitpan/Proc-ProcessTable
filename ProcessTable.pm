@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.33';
+$VERSION = '0.34';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -44,7 +44,6 @@ bootstrap Proc::ProcessTable $VERSION;
 # Preloaded methods go here.
 use Proc::ProcessTable::Process;
 use File::Find;
-use POSIX;
 
 my %TTYDEVS;
 my $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
@@ -123,7 +122,7 @@ sub _get_tty_list
 	 my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
 	    $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
 	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name
-	   if(S_ISCHR($mode));
+	   if(-c $File::Find::name);
        },
        "/dev" 
       );
@@ -141,7 +140,7 @@ Proc::ProcessTable - Perl extension to access the unix process table
 
 =head1 SYNOPSIS
 
-  use ProcessTable;
+  use Proc::ProcessTable;
 
   $p = new Proc::ProcessTable( 'cache_ttys' => 1 ); 
   @fields = $p->fields;

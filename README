@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .33
+Proc::ProcessTable, version .34
 
 STATUS
 ======
@@ -9,7 +9,7 @@ bsdi, netbsd, unixware 7.x and SunOS. Please see the "README.osname" files
 for details on individual os implementations. Please see the file
 PORTING if you are interested in making it work on something
 else. Please see the file TODO for a list of issues that need to be
-addressed.
+addressed (and send me patches!).
 
 Comments, bug reports, patches and especially ports are greatly
 appreciated.
@@ -41,7 +41,9 @@ With this module, you can do things like this:
 There is another short example in the file "example.pl" in the
 distribution. For a more elaborate example (in German), see
 <http://www.linux-magazin.de/ausgabe.1999.02/Proc/proc.html>.
-
+<shameless plug> If you can't read German, try my other module,
+WWW::Babelfish!</shameless plug> 
+	
 There are also two contributed modules: a module called Proc::Killall
 contributed by Aaron Sherman to kill all processes whose command-lines
 match a given pattern, and a module called Proc::Killfam by Stephen
@@ -68,8 +70,8 @@ Process/Process.pm.
 
 ACKNOWLEDGEMENTS
 ================
-Thanks to the many people who sent in patches to help get the solaris
-version to build. Thanks especially to the following contributors:
+Thanks to the many people who have sent in ports and patches. Without
+them this module would be impossible to support on so many platforms.
 
 David Paquet <David.Paquet@cnes.fr>		AIX port
 Mike Romberg <romberg@fsl.noaa.gov>		HPUX port
@@ -100,13 +102,19 @@ Martin Lucina <mato@catalyst.net.nz>	Unixware 7.x port
 Shawn Clifford <shawn.a.clifford@lmco.com> SunOS port
 Thomas Linden <tom@daemon.de>		Linux enhancements
 Nicolas Belan <belan@matranet.com>	Patch to add cmndline for bsdi
+Marcus Crafter <crafterm@osa.de>	Documentation typo
+Stephen Pillinger <S.M.Pillinger@cs.bham.ac.uk>
+					Fix for JIFFIES_TO_MICROSECONDS int 
+					overflow.	  
+H.Merijn Brand <h.m.brand@hccnet.nl>	Patch for File::Find on AIX.
+Anthony Higa <anthony@squareusa.com>	Linux code cleanup patch.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.
 			
 COPYRIGHT
 =========
-Copyright (c) 1998, 1999, 2000, 2001 Daniel J. Urist. All rights reserved.
+Copyright (c) 1998-2002 Daniel J. Urist. All rights reserved.
 This package is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 

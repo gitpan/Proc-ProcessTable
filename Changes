@@ -174,3 +174,15 @@ Revision history for Perl extension Proc::ProcessTable.
 	644 permissions for /tmp/TTYDEVS.
 
 
+0.34	Sun Feb 24 21:55:07 EST 2002
+	-Corrected documentation type pointed out by Marcus Crafter
+	<crafterm@osa.de>. Fix for JIFFIES_TO_MICROSECONDS potential 
+	int overflow on linux from Stephen Pillinger
+	<S.M.Pillinger@cs.bham.ac.uk>. Patch for File::Find routine 
+	on AIX (broken POSIX?) from H.Merijn Brand
+	<h.m.brand@hccnet.nl>. Big linux code cleanup patch from
+	Anthony Higa <anthony@squareusa.com>; I *think* this also
+	fixes the linux-ppc problem reported by Marcus Crafter.
+
+	
+	
