@@ -210,6 +210,7 @@ void OS_get_table(){
 
 	  format[F_CMNDLINE] = tolower(format[F_CMNDLINE]);
 	}
+	fclose(fp);
       }
 
       /* Make sure our format is not all x's, which happens

@@ -27,3 +27,10 @@ Revision history for Perl extension Proc::ProcessTable.
 	"uname -r" returns the "SunOS" version of 5.5. Fixed bug in
 	linux module in which only the first field of the command line 
 	was getting passed in cmndline attribute.
+
+0.09   Fri Feb 19 23:23:53 1999 
+	- Fixed bug in Linux.c, fopen() called without corresponding 
+	fclose. Added empty DESTROY subs to ProcessTable.pm and Process.pm
+	to fix occasional problems with mod_perl. Changed all instances of
+	sv_undef in ProcessTable.xs to PL_sv_undef to comply with new 
+	standard.

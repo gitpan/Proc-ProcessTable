@@ -13,7 +13,7 @@ require AutoLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 
 # Preloaded methods go here.
@@ -74,6 +74,10 @@ sub pgrp {
   }
   return $self->{pgrp};
 }
+
+
+# Apparently needed for mod_perl
+sub DESTROY {}
 
 # Autoload methods go after =cut, and are processed by the autosplit program.
 
@@ -157,7 +161,7 @@ they are named. Currently supported are:
   ttydev      path of process's tty
 
 See the "README.osname" files in the distribution for more
-information. 
+up-to-date information. 
 
 =back
 

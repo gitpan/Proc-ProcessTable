@@ -42,7 +42,7 @@ void store_ttydev( HV* myhash, long ttynum ){
     hv_store(myhash, "ttydev", strlen("ttydev"), newSVsv(*ttydev), 0); 
   }
   else{
-    hv_store(myhash, "ttydev", strlen("ttydev"), &sv_undef, 0);
+    hv_store(myhash, "ttydev", strlen("ttydev"), &PL_sv_undef, 0);
   }
 }
 
@@ -81,7 +81,7 @@ void bless_into_proc(char* format, char** fields, ...){
       {
       case 'S': /* ignore; creates an undef value for this key in the hash */
 	va_arg(args, char *);
-	hv_store(myhash, key, strlen(key), &sv_undef, 0);
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
 	break;
       case 's':  /* string */
 	s_val = va_arg(args, char *);
@@ -90,7 +90,7 @@ void bless_into_proc(char* format, char** fields, ...){
 
       case 'I':  /* ignore; creates an undef value for this key in the hash */
 	va_arg(args, int);
-	hv_store(myhash, key, strlen(key), &sv_undef, 0);
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
 	break;
       case 'i':  /* int */
 	i_val = va_arg(args, int);
@@ -102,7 +102,7 @@ void bless_into_proc(char* format, char** fields, ...){
 
       case 'L':  /* ignore; creates an undef value for this key in the hash */
 	va_arg(args, long);
-	hv_store(myhash, key, strlen(key), &sv_undef, 0);
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
 	break;
       case 'l':  /* long */
 	l_val = va_arg(args, long);

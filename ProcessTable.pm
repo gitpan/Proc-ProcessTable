@@ -1,6 +1,6 @@
 package Proc::ProcessTable;
 
-require 5.004;
+require 5.004_05;
 
 use strict;
 use Carp;
@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.08';
+$VERSION = '0.09';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -109,6 +109,9 @@ sub _get_tty_list {
       );
 }
 
+# Apparently needed for mod_perl
+sub DESTROY {}
+
 1;
 __END__
 
@@ -173,8 +176,9 @@ are supported directly by internal perl functions.
 
 =head1 CAVEATS
 
-Currently supported OS's are linux. Please see the file PORTING for
-information on how to help make this work on your OS.
+Please see the file README in the distribution for a list of supported
+operating systems. Please see the file PORTING for information on how
+to help make this work on your OS.
 
 =head1 AUTHOR
 
