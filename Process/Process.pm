@@ -151,6 +151,8 @@ they are named. Currently supported are:
   cstime      child stime                        (Linux only)
   time        user + system time                 
   ctime       child user + system time
+  timensec    user + system nanoseconds part	 (Solaris only)
+  ctimensec   child user + system nanoseconds    (Solaris only)
   qtime       cumulative cpu time                (IRIX only)
   size        virtual memory size (bytes)
   rss         resident set size (bytes)

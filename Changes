@@ -13,49 +13,59 @@ Revision history for Perl extension Proc::ProcessTable.
 	- fixed minor compilation problems for solaris. Changed rss to
 	bytes on linux for consistency with solaris; also added "time"
 	and "ctime" fields to linux for consistency. Updated
-	documentation in Process.pm. Folded in AIX port by David Paquet.
+	documentation in Process.pm. Folded in AIX port by David
+	Paquet <david-paquet@usa.net>.
 
 0.06  Wed Dec  9 23:42:05 1998
-	- added HPUX port by Mike Romberg.
+	- added HPUX port by Mike Romberg <romberg@fsl.noaa.gov>.
 
 0.07  Wed Jan  6 14:57:04 1999
-	- added FreeBSD port by Slaven Rezic. 
+	- added FreeBSD port by Slaven Rezic <eserte@cs.tu-berlin.de>.
 
 0.08  Thu Feb  4 00:35:53 1999 
 	- Fixed bug in solaris hints file that was looking for a
 	version of solaris returned by "uname -r" as > 2.5, when
 	"uname -r" returns the "SunOS" version of 5.5. Fixed bug in
-	linux module in which only the first field of the command line 
+	linux module in which only the first field of the command line
 	was getting passed in cmndline attribute.
 
 0.09   Fri Feb 19 23:23:53 1999 
-	- Fixed bug in Linux.c, fopen() called without corresponding 
-	fclose. Added empty DESTROY subs to ProcessTable.pm and Process.pm
-	to fix occasional problems with mod_perl. Changed all instances of
-	sv_undef in ProcessTable.xs to PL_sv_undef to comply with new 
-	standard.
+	- Fixed bug in Linux.c, fopen() called without corresponding
+	fclose. Added empty DESTROY subs to ProcessTable.pm and
+	Process.pm to fix occasional problems with mod_perl. Changed
+	all instances of sv_undef in ProcessTable.xs to PL_sv_undef to
+	comply with new standard.
 
 0.10	Sat Feb 20 11:29:35 1999
-	- Added code to ProcessTable.xs to check perl patchlevel version
-	and use either PL_sv_undef or sv_undef since lots of people are
-	still using older versions of perl.
+	- Added code to ProcessTable.xs to check perl patchlevel
+	version and use either PL_sv_undef or sv_undef since lots of
+	people are still using older versions of perl.
 
 0.11	Sat Mar  6 19:04:39 1999
-	- Fixed code that checked perl patchlevel version to check directly 
-	for definition of PL_sv_undef and define it as sv_undef if it's not 
-	there, since it's not clear what patchlevel we need to check for. 
-	Also fixed embarrassing and unnecessary call to close() a string in 
-	Solaris.c
+	- Fixed code that checked perl patchlevel version to check
+	directly for definition of PL_sv_undef and define it as
+	sv_undef if it's not there, since it's not clear what
+	patchlevel we need to check for. Also fixed embarrassing and
+	unnecessary call to close() a string in Solaris.c
 
 0.12	Sun Mar 21 10:53:56 1999
 	- Hopefully the final fix for the sv_undef buglet.
 
 0.14	Fri May 14 06:30:15 1999 
-	- Added patch for IRIX from W. Phillip Moore in 0.13, but forgot 
-	to add files to MANIFEST and edit Changes (Duh). W. Phillip Moore's
-	patch also included a minor patch for Solaris to get the page
-	size from the system.
+	- Added port for IRIX from W. Phillip Moore <wpm@ms.com> in
+	0.13, but forgot to add files to MANIFEST and edit Changes
+	(Duh). W. Phillip Moore's port also included a minor patch for
+	Solaris to get the page size from the system. 
 
 0.15	Tue Jun  1 21:33:16 1999
-	- Added patch from Peter ??? (hooft@natlab.research.philips.com) for 
-	IRIX version differences. There seems to be a lot of IRIX out there.
+	- Added patch from Peter ? <hooft@natlab.research.philips.com>
+	for IRIX version differences. There seems to be a lot of IRIX
+	out there.
+
+0.16	Mon Aug  9 22:59:46 1999
+	- Added nanosecond Solaris patch from Rolf Petter Halle
+	<rph@nextel.no>. Added port for dec_osf from Bernhard
+	Schmalhofer <Bernhard.Schmalhofer@fazi.de>, which included new 
+	version of test code as well. Added bsdi port from Sean Eskins
+	<sean@gilasoft.com>. 
+

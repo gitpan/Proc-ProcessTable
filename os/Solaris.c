@@ -119,6 +119,8 @@ void OS_get_table(){
 		     psbuf.pr_time.tv_sec,   /* time */
 		     psbuf.pr_ctime.tv_sec,  /* ctime */
 #if defined(PROC_FS)
+		     psbuf.pr_time.tv_nsec,  /* time nanosec */
+		     psbuf.pr_ctime.tv_nsec,  /* ctime nanosec */
 		     psbuf.pr_size * pagesize,   /* size (bytes) */
 		     psbuf.pr_rssize * pagesize, /* rss (bytes)  */
 		     psbuf.pr_lwp.pr_wchan,  /* wchan */ 

@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.15';
+$VERSION = '0.16';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -49,39 +49,50 @@ use Storable qw(store retrieve);
 my %TTYDEVS;
 my $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
 
-sub new {
+sub new 
+{
   my ($this, %args) = @_;
   my $class = ref($this) || $this;
   my $self = {};
   bless $self, $class;
 
-  $self->{cache_ttys} = 1 if $args{cache_ttys} == 1;
+  if ( exists $args{cache_ttys} && $args{cache_ttys} == 1 )
+  { 
+    $self->{cache_ttys} = 1 
+  }
 
   my $status = $self->initialize;
-  if($status){
+  if($status)
+  {
     return $self; 
   }
-  else{
+  else
+  {
     return undef;
   }
 }
 
-sub initialize {
+sub initialize 
+{
   my ($self) = @_;
 
   # Get the mapping of TTYs to device nums
   # reading/writing the cache if we are caching
-  if( $self->{cache_ttys} ){
-    if( -r $TTYDEVSFILE ){
+  if( $self->{cache_ttys} )
+  {
+    if( -r $TTYDEVSFILE )
+    {
       $_ = retrieve($TTYDEVSFILE);
       %Proc::ProcessTable::TTYDEVS = %$_;
     }
-    else{
+    else
+    {
       $self->_get_tty_list;
       store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
     }
   }
-  else{
+  else
+  {
     $self->_get_tty_list;
   }
 
@@ -96,7 +107,8 @@ sub initialize {
 # This might be faster in Table.xs,
 # but it's a lot more portable here
 ###############################################
-sub _get_tty_list {
+sub _get_tty_list 
+{
   my ($self) = @_;
   undef %Proc::ProcessTable::TTYDEVS;
   find(

@@ -8,12 +8,7 @@
 #include <sys/proc.h> /* needed for process state constants */
 #include <sys/statvfs.h>
 #include <sys/types.h>
-
-#if defined(PROC_FS)
-#include <procfs.h>
-#else
 #include <sys/procfs.h>
-#endif
 
 #ifdef i386
 #undef SP
@@ -31,48 +26,28 @@
 #define STOP   "stop"
 #define ONPROC "onprocessor" 
 
-/* Solaris is an all-or-nothing deal, all this stuff comes out of 
+/* Digital Unix is an all-or-nothing deal, all this stuff comes out of 
    one structure, so we don't need to dick around with the format much */
-static char Format[] = "iiiiiiiillllliilllslssss";
+static char Format[] = "iiiiiilllllllssss";
 
 /* Mapping of field to type */
 static char* Fields[] = {
-
   "uid",
   "gid",
-  "euid",
-  "egid",
   "pid",
   "ppid",
   "pgrp",
   "sess",
-
   "priority",
   "ttynum",
   "flags",
   "time",
-  "ctime",
-  "timensec",
-  "ctimensec",
   "size",
   "rss",
-  "wchan",
-
-  "fname",
-
   "start",
-
+  "fname",
   "pctcpu",
   "state",
-  "pctmem",
   "cmndline"
 };
-
-
-
-
-
-
-
-
 

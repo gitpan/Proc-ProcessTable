@@ -1,10 +1,10 @@
-Proc::ProcessTable, version .15
+Proc::ProcessTable, version .16
 
 STATUS
 ======
 This is ALPHA software; use at your own risk. Currently works on
-linux, solaris, aix, hpux, freebsd and irix. Please see the
-"README.osname" files for details on individual os
+linux, solaris, aix, hpux, freebsd, irix, dec_osf and bsdi. Please see
+the "README.osname" files for details on individual os
 implementations. Please see the file PORTING if you are interested in
 making it work on something else. Please see the file TODO for a list
 of issues that need to be addressed.
@@ -55,16 +55,22 @@ Process/Process.pm.
 ACKNOWLEDGEMENTS
 ================
 Thanks to the many people who sent in patches to help get the solaris
-version to build. Thanks especially to David Paquet for providing the
-AIX port, to Mike Romberg for the HPUX port, to Slaven Rezic for
-the FREEBSD port, and to W. Phillip Moore for the IRIX port.
+version to build. Thanks especially to the following contributors:
+
+David Paquet <david-paquet@usa.net>		AIX port
+Mike Romberg <romberg@fsl.noaa.gov>		HPUX port
+Slaven Rezic <eserte@cs.tu-berlin.de>		FreeBSD port
+W. Phillip Moore <wpm@ms.com>			IRIX port
+Peter ? <hooft@natlab.research.philips.com>	IRIX version patch
+Rolf Petter Halle <rph@nextel.no>		solaris nanosecond patch
+Bernhard Schmalhofer <Bernhard.Schmalhofer@fazi.de>	dec_osf port
+Sean Eskins <sean@gilasoft.com>				bsdi port
 
 COPYRIGHT
 =========
 Copyright (c) 1998, 1999 Daniel J. Urist. All rights reserved.  This
 package is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
-
 
 --
 Daniel J. Urist

@@ -15,7 +15,7 @@ WriteMakefile(
     'LIBS'	=> [''],   # e.g., '-lm' 
     'DEFINE'	=> '',     # e.g., '-DHAVE_SOMETHING' 
     'INC'	=> '',     # e.g., '-I/usr/include/other' 
-    'LDFROM'    => '$(O_FILES)',
+    'OBJECT'    => '$(O_FILES)',
     'PREREQ_PM'    => { 'File::Find' => 0, 'Storable' => 0 },
     'clean'     => { FILES => 'OS.c' },
     'dist' => { COMPRESS=>"gzip", SUFFIX=>"gz" }

@@ -3,12 +3,13 @@ MANIFEST
 Makefile.PL
 ProcessTable.pm
 ProcessTable.xs
-test.pl
 README
 README.aix
 README.freebsd
 README.linux
 README.solaris
+README.dec_osf
+README.bsdi
 PORTING
 TODO
 Process/Makefile.PL
@@ -19,6 +20,8 @@ hints/aix.pl
 hints/hpux.pl
 hints/freebsd.pl
 hints/irix.pl
+hints/dec_osf.pl
+hints/bsdi.pl
 os/Linux.c
 os/Linux.h
 os/Solaris.c
@@ -30,3 +33,8 @@ os/FreeBSD.c
 os/FreeBSD.h
 os/IRIX.h
 os/IRIX.c
+os/DecOSF.c
+os/DecOSF.h
+os/bsdi.c
+os/bsdi.h
+t/process.t
