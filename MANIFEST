@@ -18,6 +18,7 @@ hints/solaris.pl
 hints/aix.pl
 hints/hpux.pl
 hints/freebsd.pl
+hints/irix.pl
 os/Linux.c
 os/Linux.h
 os/Solaris.c
@@ -27,3 +28,5 @@ os/aix.h
 os/HPUX.c
 os/FreeBSD.c
 os/FreeBSD.h
+os/IRIX.h
+os/IRIX.c
