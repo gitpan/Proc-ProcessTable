@@ -32,8 +32,9 @@ void OS_get_table()
   
   /* variables to hold some values for bless_into_proc */
   char state[20]; 
-  char pctcpu[4];
+  char pctcpu[7];
   char pctmem[7];
+  long pr_age, now;
   
   if( (procdir = opendir( "/proc" )) == NULL ) return;
   
@@ -79,8 +80,13 @@ void OS_get_table()
         break;
       }
 
-    /* This seems to be 1 byte */
-    sprintf( pctcpu,  "%3d", psbuf.pr_cpu  );
+    now = time(NULL);
+    pr_age = now - psbuf.pr_start.tv_sec;	
+    if (pr_age < 1) {
+	sprintf( pctcpu, "%3.2f", (float) 0.0); /* pr_time.tv_sec is 0 */
+    } else {
+       sprintf( pctcpu, "%3.2f", (float) ((psbuf.pr_time.tv_sec * 100) / pr_age));
+    }
 
     bless_into_proc( Format,           
                      Fields,
@@ -101,7 +107,6 @@ void OS_get_table()
                      psbuf.pr_fname,         /* fname */
                      pctcpu,                 /* pctcpu */
                      state,                  /* state */
-                     pctmem,                 /* pctmem */
                      psbuf.pr_psargs         /* cmndline */ 
                    );
     

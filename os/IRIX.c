@@ -1,5 +1,10 @@
 
 #include "os/IRIX.h"
+#include <sys/sysinfo.h>
+#include <sys/swap.h>
+
+#define SWAP_BLKSIZE	512	/* better if we extract the block size from
+					system call but I don't know how */
 
 /* Make sure /proc is mounted */
 char* OS_initialize(){
@@ -27,7 +32,9 @@ void OS_get_table(){
 
   struct prpsinfo psbuf;
   struct rminfo rminfo;
-  
+  off_t  tswap;          /* total swap in blocks */
+  uint   totswap;	 /* total swap size in pages */
+ 
   /* variables to hold some values for bless_into_proc */
   char state[20]; 
   char pctcpu[7];
@@ -38,7 +45,8 @@ void OS_get_table(){
   if( (procdir = opendir( "/proc" )) == NULL ) return;
 
   sysmp(MP_SAGET, MPSA_RMINFO, &rminfo, sizeof(rminfo));
-  
+  swapctl(SC_GETSWAPTOT, &tswap);
+ 
   while( (procdirp = readdir(procdir)) != NULL ){
     
     /* Only look at this file if it's a proc id; that is, all numbers */
@@ -106,8 +114,9 @@ void OS_get_table(){
     sprintf( pctcpu, "%3.2f", 
 	     (float) ((psbuf.pr_time.tv_sec) * 100) / (( time(NULL) - psbuf.pr_start.tv_sec ) * 100));
 
+    totswap = (int)tswap * SWAP_BLKSIZE / (int)pagesize;
     sprintf( pctmem, "%5.2f", 
-	     ((double)psbuf.pr_size)/rminfo.physmem*100);
+	     ((double)psbuf.pr_size)/(double)(rminfo.physmem+totswap)*100);
 
     bless_into_proc( Format,           
 		     Fields,
