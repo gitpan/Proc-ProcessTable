@@ -55,6 +55,28 @@ void OS_get_table(){
     close(psdata);
 
     /* translate process state */
+#if defined(sgi) && (IRIX_VERSION >= 0x006005)
+    switch( psbuf.pr_sname )
+      {
+      case 'S':
+	strcpy(state, SLEEP);
+	break;
+      case '0':
+	/* FALLTHROUGH */
+      case 'R':
+	strcpy(state, RUN);
+	break;
+      case 'Z':
+	strcpy(state, ZOMBIE);
+	break;
+      case 'T':
+	strcpy(state, STOP);
+	break;
+      case 'X':
+	strcpy(state, XBRK);
+	break;
+      }
+#else
     switch( psbuf.pr_state)
       {
       case SSLEEP: 
@@ -76,6 +98,7 @@ void OS_get_table(){
 	strcpy(state, XBRK);
 	break;
       }
+#endif
 
     /* These seem to be 2 bytes, 1st byte int part, 2nd byte fractional */
     /* Perl can handle stringy numbers of the form 1.5 */

@@ -56,3 +56,6 @@ Revision history for Perl extension Proc::ProcessTable.
 	patch also included a minor patch for Solaris to get the page
 	size from the system.
 
+0.15	Tue Jun  1 21:33:16 1999
+	- Added patch from Peter ??? (hooft@natlab.research.philips.com) for 
+	IRIX version differences. There seems to be a lot of IRIX out there.
