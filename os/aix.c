@@ -32,6 +32,15 @@ char* OS_initialize() {
   }
   
   Sysmem = Sysmem * 1024;
+  
+  /*
+   * Get The number of processors
+   *
+   */
+   ProcessNumber = sysconf(_SC_NPROCESSORS_ONLN);
+   if ( ProcessNumber == -1 ) {
+     ProcessNumber = 1;
+   }
 
 
   /*
@@ -123,7 +132,7 @@ void OS_get_table() {
 		       pr_buff[i].pi_minflt,
 		       pr_buff[i].pi_utime,
 		       pr_buff[i].pi_stime,
-		       pr_buff[i].pi_size );
+		       pr_buff[i].pi_size * PageSize );
       
       continue;
     } 
@@ -174,10 +183,10 @@ void OS_get_table() {
      */
         
     pctcpu[0] = pctmem[0]= '\0';      
-    
+/* compute %CPU in SMP environment */    
     sprintf( pctcpu, 
 	     "%3.2f",
-	     (utime + stime ) * 100 / ( now - uinfo.ui_start ) );
+	     ((utime + stime ) * 100 / ( now - uinfo.ui_start )) / ProcessNumber );
     
     if ( Sysmem == 0 ) {
       format[F_PRM] = 'S';
@@ -216,7 +225,7 @@ void OS_get_table() {
 		     pr_buff[i].pi_adspace,
 		     pr_buff[i].pi_majflt,
 		     pr_buff[i].pi_minflt,
-		     pr_buff[i].pi_size,
+		     ((pr_buff[i].pi_size * PageSize) - uinfo.ui_tsize)/1024,
 		     uinfo.ui_luid,
 		     uinfo.ui_uid,
 		     uinfo.ui_gid,
@@ -225,12 +234,12 @@ void OS_get_table() {
 		     (long) (stime  * 100),
 		     (long) (cutime * 100),
 		     (long) (cstime * 100),
-		     uinfo.ui_tsize,
+		     uinfo.ui_tsize/1024,
 		     uinfo.ui_ttyp,
 		     uinfo.ui_ttyd,
 		     uinfo.ui_ttympx,
-		     uinfo.ui_drss,
-		     uinfo.ui_trss,
+		     ((uinfo.ui_drss + uinfo.ui_trss) * PageSize)/1024,
+		     (uinfo.ui_trss * PageSize)/1024,
 		     uinfo.ui_dvm,
 		     /* uinfo.ui_prm,*/
 		     pctmem,

@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .24
+Proc::ProcessTable, version .25
 
 STATUS
 ======
@@ -73,6 +73,7 @@ Sean Eskins <sean@gilasoft.com>				bsdi port
 Peter Reich <pr@alles.prima.de>				netbsd port
 Dave Alden <alden@math.ohio-state.edu>	solaris "nice" and "onproc" patch
 Noel Paul <NoelP@mincom.com>		dec_osf and IRIX patches
+F. Buirey <f.buirey@saprr.fr> 		AIX patch for SMP
 
 COPYRIGHT
 =========

@@ -67,6 +67,7 @@
 
 static long Sysmem;
 static int  PageSize;
+static int  ProcessNumber;
 
 static char Fullformat[]    = "llllllllsslsllllllllllllllllllllss";
 static char Zombformat[]    = "lllllllllslslllllll";
