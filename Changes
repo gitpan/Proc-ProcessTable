@@ -105,3 +105,7 @@ Revision history for Perl extension Proc::ProcessTable.
 	"fname" which isn't supported on all architectures (though it
 	should be). Added "example.pl" file which contains the same
 	code. 
+
+0.21	Fri Sep 10 12:32:13 1999
+	- Bug fix; new "fields" method was crapping out on everything
+	except Linux-Intel.

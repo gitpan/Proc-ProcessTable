@@ -240,10 +240,10 @@ fields(obj)
        perl_call_method("table", G_DISCARD);
      }
 
+     EXTEND(SP,Numfields);
      for (i=0; i < Numfields; i++ ){
-       EXTEND(SP,1);
-       sv_setpv(my_sv,Fields[i]);
-       PUSHs(sv_2mortal(newSVsv( my_sv )));
+       my_sv = newSVpv(Fields[i],0);
+       PUSHs(sv_2mortal(my_sv));
      }
 
 void 
