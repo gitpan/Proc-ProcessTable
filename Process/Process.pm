@@ -134,8 +134,10 @@ they are named. Currently supported are:
   egid        effective GID of process           (Solaris only)
   pid         process ID
   ppid        parent process ID
+  spid        sprod ID                           (IRIX only)
   pgrp        process group
   sess        session ID
+  cpuid       CPU ID of processor running on     (IRIX only)
   priority    priority of process
   ttynum      tty number of process
   flags       flags of process
@@ -149,6 +151,7 @@ they are named. Currently supported are:
   cstime      child stime                        (Linux only)
   time        user + system time                 
   ctime       child user + system time
+  qtime       cumulative cpu time                (IRIX only)
   size        virtual memory size (bytes)
   rss         resident set size (bytes)
   wchan       address of current system call 
@@ -156,9 +159,10 @@ they are named. Currently supported are:
   start       start time (seconds since the epoch)
   pctcpu      percent cpu used since process started
   state       state of process
-  pctmem      percent memory
+  pctmem      percent memory			 
   cmndline    full command line of process
   ttydev      path of process's tty
+  clname      scheduling class name              (IRIX only)
 
 See the "README.osname" files in the distribution for more
 up-to-date information. 

@@ -1,13 +1,13 @@
-Proc::ProcessTable, version .11
+Proc::ProcessTable, version .13
 
 STATUS
 ======
 This is ALPHA software; use at your own risk. Currently works on
-linux, solaris, aix, hpux and freebsd. Please see the "README.osname"
-files for details on individual os implementations. Please see the
-file PORTING if you are interested in making it work on something
-else. Please see the file TODO for a list of issues that need to be
-addressed. 
+linux, solaris, aix, hpux, freebsd and irix. Please see the
+"README.osname" files for details on individual os
+implementations. Please see the file PORTING if you are interested in
+making it work on something else. Please see the file TODO for a list
+of issues that need to be addressed.
 
 Comments, bug reports, patches and especially ports are greatly
 appreciated.
@@ -56,8 +56,8 @@ ACKNOWLEDGEMENTS
 ================
 Thanks to the many people who sent in patches to help get the solaris
 version to build. Thanks especially to David Paquet for providing the
-AIX port, to Mike Romberg for the HPUX port, and to Slaven Rezic for
-the FREEBSD port.
+AIX port, to Mike Romberg for the HPUX port, to Slaven Rezic for
+the FREEBSD port, and to W. Phillip Moore for the IRIX port.
 
 COPYRIGHT
 =========
@@ -69,3 +69,4 @@ under the same terms as Perl itself.
 --
 Daniel J. Urist
 durist@world.std.com
+http://www.world.std.com/~durist

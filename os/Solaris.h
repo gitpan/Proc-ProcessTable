@@ -37,6 +37,7 @@ static char Format[] = "iiiiiiiillllllllslssss";
 
 /* Mapping of field to type */
 static char* Fields[] = {
+
   "uid",
   "gid",
   "euid",
@@ -45,6 +46,7 @@ static char* Fields[] = {
   "ppid",
   "pgrp",
   "sess",
+
   "priority",
   "ttynum",
   "flags",
@@ -53,8 +55,11 @@ static char* Fields[] = {
   "size",
   "rss",
   "wchan",
+
   "fname",
+
   "start",
+
   "pctcpu",
   "state",
   "pctmem",

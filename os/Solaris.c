@@ -22,6 +22,7 @@ void OS_get_table(){
   DIR *procdir;
   struct dirent *procdirp;
   int psdata;
+  int pagesize;
   char pathbuf[MAXPATHLEN];
 
 #if defined(PROC_FS)
@@ -35,6 +36,8 @@ void OS_get_table(){
   char pctcpu[7];
   char pctmem[7];
   
+  if ( (pagesize = getpagesize()) == NULL ) return;
+
   if( (procdir = opendir( "/proc" )) == NULL ) return;
   
   while( (procdirp = readdir(procdir)) != NULL ){
@@ -116,8 +119,8 @@ void OS_get_table(){
 		     psbuf.pr_time.tv_sec,   /* time */
 		     psbuf.pr_ctime.tv_sec,  /* ctime */
 #if defined(PROC_FS)
-		     psbuf.pr_size * 1024,   /* size (bytes) */
-		     psbuf.pr_rssize * 1024, /* rss (bytes)  */
+		     psbuf.pr_size * pagesize,   /* size (bytes) */
+		     psbuf.pr_rssize * pagesize, /* rss (bytes)  */
 		     psbuf.pr_lwp.pr_wchan,  /* wchan */ 
 #else
 		     psbuf.pr_bysize,        /* size (bytes) */
