@@ -1,20 +1,20 @@
-- Times (time, ctime, stime, utime, cstime, cutime) are currently done
-as jiffies (1/100 sec) on linux, and as seconds on Solaris although
-Solaris supports microsecond resolution (we take the seconds part out
-of the Solaris time structure). Since a lot of systems seem to
-support microsecond resolution (AIX also), all times should probably
-be handled in microseconds. The problem of course is that this number
-can get really big; presumably this is why Solaris uses a structure to
-store it. I don't know what the best solution is here; pass it in as a 
-long and hope that's big enough, or maybe as a string and let perl
-deal with it?
+- The module doesn't currently compile in the Solaris Large File
+environment; this should be easy to fix (see
+README.solaris_large_file_env) but I don't have a Soalris machine to
+work on.
 
-- Since people are starting to provide ports and there is a real
-interest in this module, there should be some sort of minimal useful
-set of attributes with consistent units that all OS modules should
-support. Maybe this should be part of a firmer spec than what's in the 
-PORTING file.
+- Since a lot of systems seem to support microsecond resolution, all
+times should probably be handled in microseconds. The problem of
+course is that this number can get really big; presumably this is why
+Solaris uses a structure to store it. I don't know what the best
+solution is here; pass it in as a long and hope that's big enough, or
+maybe as a string and let perl deal with it?
+
+-There should be some sort of minimal useful set of attributes with
+consistent units that all OS modules should support. Maybe this should
+be part of a firmer spec than what's in the PORTING file.
 
 - An NT port (if possible) would be nice and quite a coup.
 
 - Porting the API to TCL and Python would be nice (shouldn't be hard).
+

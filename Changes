@@ -149,3 +149,9 @@ Revision history for Perl extension Proc::ProcessTable.
        fix bug in cmndline under Linux. Killfam.pm module from
        Steve Lidie <sol0@Lehigh.EDU>.
 
+0.30   Sun Mar  4 05:05:26 EST 2001
+       - Patch from David Good <dgood@stratasource.com> for 32-bit
+       HPUX 11.0 support via the 64-bit interface. Port to Unixware
+       7.x from Martin Lucina <mato@catalyst.net.nz>. Upgraded status
+       to beta :)
+

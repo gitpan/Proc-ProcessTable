@@ -46,3 +46,9 @@ os/bsdi.h
 os/NetBSD.c
 os/NetBSD.h
 t/process.t
+README.solaris_large_file_env
+hints/svr4.pl
+hints/svr5.pl
+os/UnixWare.c
+os/UnixWare.h
+README.unixware

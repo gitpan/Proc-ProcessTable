@@ -1,13 +1,15 @@
-Proc::ProcessTable, version .29
+Proc::ProcessTable, version .30
 
 STATUS
 ======
-This is ALPHA software; use at your own risk. Currently works on
-linux, solaris, aix, hpux, freebsd, irix, dec_osf, bsdi and
-netbsd. Please see the "README.osname" files for details on individual
-os implementations. Please see the file PORTING if you are interested
-in making it work on something else. Please see the file TODO for a
-list of issues that need to be addressed.
+This is BETA software; it seems to work, but use at your own risk :) 
+
+Currently works on linux, solaris, aix, hpux, freebsd, irix, dec_osf,
+bsdi, netbsd and unixware 7.x. Please see the "README.osname" files
+for details on individual os implementations. Please see the file
+PORTING if you are interested in making it work on something
+else. Please see the file TODO for a list of issues that need to be
+addressed.
 
 Comments, bug reports, patches and especially ports are greatly
 appreciated.
@@ -75,7 +77,7 @@ Slaven Rezic <eserte@cs.tu-berlin.de>		FreeBSD port
 W. Phillip Moore <wpm@ms.com>			IRIX port
 Peter ? <hooft@natlab.research.philips.com>	IRIX version patch
 Rolf Petter Halle <rph@nextel.no>		solaris nanosecond patch
-Bernhard Schmalhofer <Bernhard.Schmalhofer@fazi.de>	dec_osf port
+Bernhard Schmalhofer <Bernhard.Schmalhofer@gmx.de>	dec_osf port
 Sean Eskins <sean@gilasoft.com>				bsdi port
 Peter Reich <pr@alles.prima.de>				netbsd port
 Dave Alden <alden@math.ohio-state.edu>	solaris "nice" and "onproc" patch
@@ -91,6 +93,11 @@ Chris Adams <cmadams@hiwaay.net>	Patch for array return
 					support, new fields on Dec OSF
 Tryggvi Farestveit <tryggvi@firmanet.is> Patch for Linux cmndline
 Steve Lidie <sol0@Lehigh.EDU>		Killfam.pm module
+David Good <dgood@stratasource.com>	Patch for 32-bit HPUX 11.0 support
+Martin Lucina <mato@catalyst.net.nz>	Unixware 7.x port
+
+Please note that Bernard Schmalhofer is no longer able to provide
+support for the dec_osf port.
 			
 COPYRIGHT
 =========
