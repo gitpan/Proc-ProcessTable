@@ -1,4 +1,4 @@
-Proc::ProcessTable, version .36
+Proc::ProcessTable, version .37
 
 STATUS
 ======
@@ -137,6 +137,7 @@ Marcus Crafter <crafterm@osa.de>	Patch for linux compiler
 J Robert Ray <jrray@jrray.org>		Windows port.
 Kong Li <Kong.Li@netiq.com>		Solaris multithread support.
 <jon@jjb.demon.co.uk>			Patch for tty mapping.
+Philip Molter <philip@texas.net>	Patch for my Solaris typo.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.

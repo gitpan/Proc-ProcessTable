@@ -154,7 +154,7 @@ void OS_get_table(){
 		     psbuf.pr_lwp.pr_onpro,  /* on which processor */
 #endif
 		     pctmem,                 /* pctmem */
-		     psbuf.pr_psargs         /* cmndline */ 
+		     psbuf.pr_psargs,        /* cmndline */ 
 		     numthr                  /* numthr */ 
 		    );
     

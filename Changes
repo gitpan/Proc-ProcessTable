@@ -217,3 +217,7 @@ Revision history for Perl extension Proc::ProcessTable.
 	HPUX by H.Merijn Brand <h.m.brand@hccnet.nl>. Changed ttynums
 	to be treated as unsigned to fix occasional negative ttynum
 	bug reported by Daniel Berger <djberge@qwest.com>. 
+
+0.37	Fri Nov  8 09:50:56 EST 2002
+	-Patch from Philip Molter <philip@texas.net> to fix typo in
+	Solaris.c. 
