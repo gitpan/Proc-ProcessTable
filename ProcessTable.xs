@@ -9,10 +9,12 @@ extern "C" {
 #endif
 
 
-/* As of version 5.005_something it seems */
-/* sv_undef is no longer supported */
-#if PATCHLEVEL < 5
-      #define PL_sv_undef sv_undef
+/*  As of version 5.005_something it seems sv_undef has been
+supplanted by PL_sv_undef. This version of how to deal with this comes
+from a usenet posting by Michael Peppler and avoids the issue of what
+patchlevel is supported.  */
+#if !defined(PL_sv_undef)
+#define PL_sv_undef sv_undef
 #endif
 
 /********************/

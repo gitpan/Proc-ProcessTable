@@ -132,8 +132,7 @@ void OS_get_table(){
 		     pctmem,                 /* pctmem */
 		     psbuf.pr_psargs         /* cmndline */ 
 		    );
-
-    close(pathbuf);
+    
   }
   closedir(procdir);
 }

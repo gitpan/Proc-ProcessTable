@@ -39,3 +39,10 @@ Revision history for Perl extension Proc::ProcessTable.
 	- Added code to ProcessTable.xs to check perl patchlevel version
 	and use either PL_sv_undef or sv_undef since lots of people are
 	still using older versions of perl.
+
+0.11	Sat Mar  6 19:04:39 1999
+	- Fixed code that checked perl patchlevel version to check directly 
+	for definition of PL_sv_undef and define it as sv_undef if it's not 
+	there, since it's not clear what patchlevel we need to check for. 
+	Also fixed embarrassing and unnecessary call to close() a string in 
+	Solaris.c
