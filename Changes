@@ -139,4 +139,13 @@ Revision history for Perl extension Proc::ProcessTable.
 
 0.28	Mon Aug 14 16:31:43 MYT 2000
 	- Patch from Slaven Rezic <eserte@cs.tu-berlin.de> to make
-	test script -w clean.
+       test script -w clean.
+
+0.29    Tue Jan  9 07:36:13 EST 2001
+       - Patch from Wolfgang Friebel <Wolfgang.Friebel@desy.de> for
+       os/HPUX.c to make the time method return useful values. Patch
+       from Adrian Phillips <tandem@dnmi.no> to fix AIX cmndline
+       field. Patch from Tryggvi Farestveit <tryggvi@firmanet.is> to
+       fix bug in cmndline under Linux. Killfam.pm module from
+       Steve Lidie <sol0@Lehigh.EDU>.
+

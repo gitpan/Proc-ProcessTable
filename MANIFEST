@@ -3,6 +3,7 @@ MANIFEST
 Makefile.PL
 ProcessTable.pm
 Killall.pm
+Killfam.pm
 ProcessTable.xs
 README
 README.aix

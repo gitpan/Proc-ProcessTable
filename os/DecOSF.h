@@ -28,12 +28,17 @@
 
 /* Digital Unix is an all-or-nothing deal, all this stuff comes out of 
    one structure, so we don't need to dick around with the format much */
-static char Format[] = "iiiiiilllllllssss";
+static char Format[] = "iiiiiiViiiilllllllssss";
 
 /* Mapping of field to type */
 static char* Fields[] = {
   "uid",
   "gid",
+  "euid",
+  "egid",
+  "suid",
+  "sgid",
+  "groups",
   "pid",
   "ppid",
   "pgrp",

@@ -60,7 +60,8 @@ void OS_get_table() {
   struct userinfo      uinfo;
   char                 format[F_FLAST + 1];
   char                 wchan[15], pctcpu[7], pctmem[7], state[10];
-  char                 Args[MAXARGLN+1];
+  char                 Args[MAXARGLN+1], Arglist[MAXARGLN+1], Comm[MAXARGLN+1];
+  int                  argcount;
   struct timeval       now_tval;
   double               utime, stime, cutime, cstime, now;
   
@@ -147,14 +148,40 @@ void OS_get_table() {
     if ( pr_buff[i].pi_flag & SKPROC ) {
       if ( pr_buff[i].pi_pid == 0 ) {
 	strcpy(Args, "kproc (swapper)");
+	strcpy(Comm, "kproc (swapper)");
       }
       else {
 	sprintf(Args, "kproc (%s)", uinfo.ui_comm);
+	sprintf(Comm, "kproc (%s)", uinfo.ui_comm);
       }
     }
     else {
-      if (getargs(&pr_buff[i], sizeof(struct procinfo), Args, MAXARGLN) < 0) {
+      strncpy(Comm, uinfo.ui_comm, MAXARGLN);
+      Comm[MAXARGLN] = '\0';
+      if (getargs(&pr_buff[i], sizeof(struct procinfo), Arglist, MAXARGLN) < 0) {
 	sprintf(Args, "%s", uinfo.ui_comm);
+      }
+      else {
+	/* Returns a succession of strings seperated by a null
+           characters, 2 nulls for the end (see getargs info/man page) */
+	argcount = -1;
+	while (++argcount < MAXARGLN) {
+	  /* Copy everything but replace the end of the arg with a
+             space */
+	  if (Arglist[argcount] != '\0') {
+	    Args[argcount] = Arglist[argcount];
+	  }
+	  else {
+	    /* Is this the last arg, then hop out of the loop */
+	    if (Arglist[argcount+1] == '\0') {
+	      /* Terminate the arguments */
+	      Args[argcount] = '\0';
+	      break;
+	    }
+	    /* Seperate arguments with a space */
+	    Args[argcount] = ' ';
+	  }
+	}
       }
     }
     
@@ -243,7 +270,8 @@ void OS_get_table() {
 		     uinfo.ui_dvm,
 		     /* uinfo.ui_prm,*/
 		     pctmem,
-		     Args ); 
+		     Comm,
+                     Args ); 
     
   } 
   

@@ -48,6 +48,7 @@ possible format specifiers are:
 "I" for int to be ignored
 "l" for long
 "L" for long to be ignored
+"V" for perl scalar value (like a reference to an array)
 
 The fields argument is a pointer to a list of field
 names. The variable argument list contains the field values. Note that

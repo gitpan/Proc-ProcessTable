@@ -22,6 +22,10 @@ foreach $got ( @{$t->table} )
   print STDERR "--------------------------------\n";
   foreach $field ($t->fields){
     my $v = $got->{$field};
+    if (ref($v) eq "ARRAY")
+    {
+      $v = "\"" . join ("\",\"", @$v) . "\"";
+    }
     print STDERR $field, ":  ", (defined $v ? $v : "<undef>"), "\n";
   }
 

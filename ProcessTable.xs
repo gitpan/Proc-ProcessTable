@@ -68,6 +68,7 @@ void store_ttydev( HV* myhash, long ttynum ){
 /*   i    int                                                         */
 /*   S    ignore this long                                            */
 /*   l    long                                                        */
+/*   V    perl scalar value                                           */
 /* fields is an array of pointers to field names                      */
 /* following that is a var args list of field values                  */
 /**********************************************************************/
@@ -75,6 +76,7 @@ void bless_into_proc(char* format, char** fields, ...){
   va_list args;
   char* key;
   char* s_val;
+  SV *SV_val;
   int i_val;
   long l_val;
 
@@ -127,6 +129,11 @@ void bless_into_proc(char* format, char** fields, ...){
 
 	/* Look up and store the tty if this is ttynum */
 	if( !strcmp(key, "ttynum") ) store_ttydev( myhash, l_val );
+	break;
+
+      case 'V':  /* perl scalar value */
+	SV_val = va_arg(args, SV *);
+	hv_store(myhash, key, strlen(key), SV_val, 0);
 	break;
 
       default:

@@ -118,6 +118,7 @@ void OS_get_table(){
   char pathbuf[PATH_MAX];
   struct stat filestat;
   FILE* fp;
+  FILE *fdtest = fopen("/tmp/tedddi", "a");
 
   /* for bless_into_proc */
   struct procstat prs; 
@@ -215,7 +216,13 @@ void OS_get_table(){
       sprintf(pathbuf, "%s%s%s", "/proc/", procdirp->d_name, "/cmdline");
       if( (fp = fopen( pathbuf, "r" )) != NULL ){ 
 	size_t got;
-	if( (got = fread(cmndline, sizeof(char), ARG_MAX, fp)) > 0 ){
+	if( (got = fread(cmndline, sizeof(char), ARG_MAX, fp)) < 1 ) 
+	{
+		strncpy(cmndline, fname, sizeof(cmndline));
+		cmndline[strlen(cmndline)] = '\0';
+   	        format[F_CMNDLINE] = tolower(format[F_CMNDLINE]);
+	}
+		else {
 	  size_t i;
 	  for(i = 0; i < got; i++){
 	    if( cmndline[i] == '\0' ) cmndline[i] = ' ';
@@ -231,7 +238,6 @@ void OS_get_table(){
 	 when a process is killed before we can read its info 
 	 and we get a blank object */
       if( strpbrk(format,"sil" ) != NULL){ 
-                                           
 	bless_into_proc( format,           
 			 Fields,
 			 filestat.st_uid,

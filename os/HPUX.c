@@ -128,7 +128,7 @@ void OS_get_table()
               pst[i].pst_procnum,
               pst[i].pst_cmd,
               pst[i].pst_cmd,
-              pst[i].pst_time,
+              pst[i].pst_cptickstotal/100,
               pst[i].pst_cpticks,
               pst[i].pst_cptickstotal,
               pst[i].pst_fss,

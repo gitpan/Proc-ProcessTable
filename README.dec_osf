@@ -2,6 +2,11 @@ SUPPORTED ATTRIBUTES
 ====================
   uid         UID of process
   gid         GID of process
+  euid        EUID of process
+  egid        EGID of process
+  suid        SUID of process
+  sgid        SGID of process
+  groups      array of supplemental groups
   pid         process ID
   ppid        parent process ID
   pgrp        process group

@@ -45,8 +45,11 @@
  * 
  */
 
+/* Grab the maximum argument length */
+#include <sys/limits.h>
+
 #define MAX_PROCS	1024	/* Pretty overloaded isn't it ? */
-#define MAXARGLN	128 
+#define MAXARGLN	ARG_MAX
 
 
 /*
@@ -69,7 +72,7 @@ static long Sysmem;
 static int  PageSize;
 static int  ProcessNumber;
 
-static char Fullformat[]    = "llllllllsslsllllllllllllllllllllss";
+static char Fullformat[]    = "llllllllsslsllllllllllllllllllllsss";
 static char Zombformat[]    = "lllllllllslslllllll";
 
 
@@ -131,8 +134,8 @@ static char* FullFields[] = {
   "trss",
   "dvm",
   "pctmem",
-  "comm"
-  
+  "comm",
+  "cmndline"
 };
 
 
