@@ -2,8 +2,8 @@
 #include "os/Linux.h"
 
 unsigned long Hertz;
-/* it would be more accurate to first multiply by 1000, but that can lead to overflow */
-#define JIFFIES_TO_MICROSECONDS(x) (((x))/Hertz*1000)
+/* NOTE: Before this was actually milliseconds even though it said microseconds, now it is correct. */
+#define JIFFIES_TO_MICROSECONDS(x) (((x)*1e6)/Hertz)
 static int init_Hertz_value(void);
 
 /* Given a path to a /proc/XXX/stat file and a pointer to a procstat
@@ -18,7 +18,7 @@ struct procstat* get_procstat( char* path, struct procstat* prs)
 		return NULL;
 
 	result = fscanf(fp, 
-			"%d %s %c %d %d %d %d %d %u %u %u %u %u %d %d %d %d %d %d %u %u %lu %u %u %u %u %u %u %u %u %d %d %d %d %u",
+			"%d %s %c %d %d %d %d %d %u %u %u %u %u %Ld %Ld %Ld %Ld %d %d %u %u %lu %u %u %u %u %u %u %u %u %d %d %d %d %u",
 			&prs->pid, 
 			prs->comm,		/* char comm[FILENAME_MAX]; */
 			&prs->state, 
@@ -132,7 +132,7 @@ void OS_get_table()
 	char pctmem[32];
 	char pctcpu[32];
 	char cbuf[1024];
-	static char format[F_LASTFIELD + 1];
+	static char format[F_LASTFIELD + 2];
 
 	size_t pagesize = getpagesize();
   
@@ -157,7 +157,7 @@ void OS_get_table()
 			continue;
 
 		/* zero our format */
-		strcpy(format, Defaultformat);
+		strncpy(format, Defaultformat, sizeof(format));
 
 		/* get puid and pgid from proc file */
 		sprintf(pathbuf, "%s%s", "/proc/", procdirp->d_name);
@@ -200,8 +200,8 @@ void OS_get_table()
 			format[F_START] = tolower(format[F_START]); /* start */
 		}
 
-		/* calculate pctcpu */
-		sprintf( pctcpu, "%3.2f", (float) ((prs->utime + prs->stime)/10) / (( time(NULL) - start ) ));
+		/* calculate pctcpu - NOTE: This assumes the cpu time is in microsecond units! */
+		sprintf( pctcpu, "%3.2f", (float) 100 * ((prs->utime + prs->stime)/1e6) / (time(NULL) - start) );
 		format[F_PCTCPU] =  tolower(format[F_PCTCPU]); /* pctcpu */
 
 		/* convert character state into one of our "official" readable

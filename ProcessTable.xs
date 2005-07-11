@@ -22,6 +22,11 @@ supplanted by PL_sv_undef. */
 #define PL_sv_undef sv_undef
 #endif
 
+/* dTHX was used in perl 5.005 */
+#ifndef dTHX
+#define dTHX dTHR
+#endif
+
 /********************/
 /* General includes */
 /********************/
@@ -110,6 +115,8 @@ void store_ttydev( HV* myhash, unsigned long ttynum ){
 /*   l    long                                                        */
 /*   J    ignore this long-long                                       */
 /*   j    long-long                                                   */
+/*   U 	  ignore this unsigned                                        */
+/*   u 	  unsigned                                                    */
 /*   V    perl scalar value                                           */
 /* fields is an array of pointers to field names                      */
 /* following that is a var args list of field values                  */
@@ -120,6 +127,7 @@ void bless_into_proc(char* format, char** fields, ...){
   char* s_val;
   SV *SV_val;
   int i_val;
+  unsigned u_val;
   long l_val;
   long long ll_val;
 
@@ -162,6 +170,15 @@ void bless_into_proc(char* format, char** fields, ...){
 	if( !strcmp(key, "ttynum") ) store_ttydev( myhash, i_val );
 	break;
 
+      case 'U':  /* ignore; creates an undef value for this key in the hash */
+	va_arg(args, unsigned );
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
+	break;
+      case 'u':  /* int */
+	u_val = va_arg(args, unsigned);
+	hv_store(myhash, key, strlen(key), newSVuv(u_val), 0);
+	break;
+
       case 'L':  /* ignore; creates an undef value for this key in the hash */
 	va_arg(args, long);
 	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
@@ -178,10 +195,10 @@ void bless_into_proc(char* format, char** fields, ...){
 	va_arg(args, long long);
 	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
 	break;
-      case 'j':  /* long */
+      case 'j':  /* long long */
 	ll_val = va_arg(args, long long);
 	hv_store(myhash, key, strlen(key), newSVnv(ll_val), 0);
-    break;
+	break;
 
       case 'V':  /* perl scalar value */
 	SV_val = va_arg(args, SV *);

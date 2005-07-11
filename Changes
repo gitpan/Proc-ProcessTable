@@ -237,3 +237,15 @@ Revision history for Perl extension Proc::ProcessTable.
 	James.FitzGibbon <James.FitzGibbon@target.com> for AIX 5.1
 	command line args. Added note to README.dec_osf that root
 	access is required.
+
+0.40	Sun Jul 10 19:10:16 MDT 2005
+	-Added patch for support of FreeBSD-5 via kvm from Oleg King
+	<king2@kaluga.ru>. Added contrib directory and pswait script
+	from dominix <dominix@despammed.com>. Patch from Steve Linn
+	<steve@rhythm.com> to handle processes larger than 2GB. Added
+	jiffies-to-microseconds patch for linux from Jason A. Smith
+	<jason@jazbo.dyndns.org>. Added patch from rt.cpan.org ticket
+	#12951 to fix Solaris 8 with multi-threaded Perl where 
+	readdir_r is defined differently for POSIX compiles. Patch for
+	misreport of PID in cygwin (rt.cpan.org ticket #12840).
+	Fix for FC4 gcc-4 buffer overrun complaint. 

@@ -181,7 +181,7 @@ OS_get_table()
 {
   external_pinfo *p;
   int uid;
-  cygwin_getinfo_types query = CW_GETPINFO_FULL;
+  cygwin_getinfo_types query = CW_GETPINFO;
   char ch;
   int pid;
   char *pstate;
@@ -194,7 +194,7 @@ OS_get_table()
 
   (void) cygwin_internal (CW_LOCK_PINFO, 1000);
 
-  if (query == CW_GETPINFO_FULL && !init_win_result)
+  if (query == CW_GETPINFO && !init_win_result)
     query = CW_GETPINFO;
 
   for (pid = 0;
@@ -220,7 +220,7 @@ OS_get_table()
 	  if (s > pname && strcasecmp (s, ".exe") == 0)
 	    *s = '\0';
 	}
-      else if (query == CW_GETPINFO_FULL)
+      else if (query == CW_GETPINFO)
 	{
 	  DWORD n;
 	  FILETIME ct, et, kt, ut;
@@ -250,7 +250,7 @@ OS_get_table()
 		      p->uid32 : p->uid));
         }
 
-	if (query == CW_GETPINFO_FULL) {
+	if (query == CW_GETPINFO) {
 		fields = "iiiiisiis";
 	} else {
 		fields = "iiiiisIis";

@@ -40,10 +40,19 @@ void OS_get_table(){
   char pctcpu[7];
   int numthr;
   char pctmem[7];
-  
+
+/* MR: quick hack for different readdir_r versions */ 
+#if defined(_POSIX_PTHREAD_SEMANTICS)
+ struct dirent *procdirp_r;
+#endif
+ 
   if( (procdir = opendir( "/proc" )) == NULL ) return;
   
-  while( readdir_r(procdir, procdirp) != NULL ){
+#if defined(_POSIX_PTHREAD_SEMANTICS)
+  while( readdir_r(procdir, procdirp, &procdirp_r ) == 0 && procdirp_r != NULL ){
+#else
+  while( readdir_r(procdir, procdirp ) != NULL ){
+#endif
     
     /* Only look at this file if it's a proc id; that is, all numbers */
     if( strtok(procdirp->d_name, "0123456789") != NULL ){ continue; }

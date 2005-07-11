@@ -38,6 +38,12 @@ SUPPORTED ATTRIBUTES
   ttydev      path of process's tty
   cwd         current directory of process
 
+NOTE
+====
+This now correctly gives you microseconds.  Previously all times were actually
+in milliseconds even though this file said microseconds.
+    -Jason Smith
+
 BUGS
 ====
 Though times are now converted to microseconds, they are limited to jiffie

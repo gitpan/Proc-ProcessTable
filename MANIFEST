@@ -8,6 +8,7 @@ ProcessTable.xs
 README
 README.aix
 README.freebsd
+README.freebsd-kvm
 README.linux
 README.solaris
 README.dec_osf
@@ -28,6 +29,7 @@ hints/aix_4_3.pl
 hints/aix_5.pl
 hints/hpux.pl
 hints/freebsd.pl
+hints/freebsd_5.pl
 hints/irix.pl
 hints/dec_osf.pl
 hints/bsdi.pl
@@ -44,6 +46,8 @@ os/aix_getprocs.h
 os/HPUX.c
 os/FreeBSD.c
 os/FreeBSD.h
+os/FreeBSD-kvm.c
+os/FreeBSD-kvm.h
 os/IRIX.h
 os/IRIX.c
 os/DecOSF.c
@@ -64,3 +68,9 @@ os/SunOS.c
 os/SunOS.h
 hints/sunos.pl
 README.sunos
+contrib/pswait
+README.darwin
+os/darwin.c
+os/darwin.h
+hints/darwin.pl
+META.yml                                 Module meta-data (added by MakeMaker)

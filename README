@@ -1,4 +1,4 @@
-Proc::ProcessTable, version 0.39
+Proc::ProcessTable, version 0.40
 
 Please note that I've moved development of this package to
 sourceforge.net. Please address all comments/bugs/patches to:
@@ -9,17 +9,18 @@ STATUS
 ======
 This is BETA software; it seems to work, but use at your own risk :) 
 
-Currently works on darwin, nonstop-ux windows, linux, solaris, aix,
-hpux, freebsd, irix, dec_osf, bsdi, netbsd, unixware 7.x and
-SunOS. Please see the "README.osname" files for details on individual
-os implementations. Please see the file PORTING if you are interested
-in making it work on something else. Please see the file TODO for a
-list of issues that need to be addressed (and send me patches!).
+Currently works on darwin, nonstop-ux, Cygwin on Windows, linux,
+solaris, aix, hpux, freebsd, irix, dec_osf, bsdi, netbsd, unixware 7.x
+and SunOS. Please see the "README.osname" files for details on
+individual os implementations. Please see the file PORTING if you are
+interested in making it work on something else. Please see the file
+TODO for a list of issues that need to be addressed (and send me
+patches!).
 
-Please note that the windows port requires the Cygwin environment to
-work (available from http://cygwin.com/), and that the code for the
-port is derived from Cygwin code and is therefore covered by the
-Cygwin license (http://cygwin.com/licensing.html).
+Please note that the Cygwin/windows port requires the Cygwin
+environment to work (available from http://cygwin.com/), and that the
+code for the port is derived from Cygwin code and is therefore covered
+by the Cygwin license (http://cygwin.com/licensing.html).
 
 Multithread support is now available for Solaris; please see
 README.solaris for info. It may work under other OS's as well; please
@@ -148,7 +149,10 @@ Aaron Sherman <ajs@ajs.com>		Patch for ppt_warn.
 Tom Wyant <twyant3@comcast.net>		Darwin port.
 Mike Steinert <mike.steinert@motorola.com>
 					Nonstop-UX port.
-
+Oleg King				FreeBSD-5 support via kvm.
+dominix <dominix@despammed.com>		pswait script
+Steve Linn <steve@rhythm.com>		Patch for processes >2GB.
+Jason A. Smith <jason@jazbo.dyndns.org> Patch for jiffies-to-ms on Linux.
 
 Please note that Bernard Schmalhofer is no longer able to provide
 support for the dec_osf port.
