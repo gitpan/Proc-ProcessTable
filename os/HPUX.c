@@ -1,4 +1,4 @@
-/*
+/*alan.martin@oracle.com
  * Copyright (c) 1998 by Mike Romberg ( romberg@fsl.noaa.gov )
  * This file may be distributed under the same terms as Perl.
  *
@@ -8,11 +8,11 @@
  *
  */
 
+#define _PSTAT64 /* For David Good's 64-bit HPUX 11.0 patch */
+
 #include <stdlib.h>
 #include <sys/param.h>
 #include <sys/pstat.h>
-
-#define _PSTAT64 /* For David Good's 64-bit HPUX 11.0 patch */
 
 #define BURST 30 /* How many pstat structs to get per syscall */
 
@@ -129,7 +129,7 @@ void OS_get_table()
               (long) pst[i].pst_wchan,
               (long) pst[i].pst_procnum,
               pst[i].pst_cmd,
-              pst[i].pst_cmd,
+              pst[i].pst_ucomm,
               (long) pst[i].pst_cptickstotal/100,
               (long) pst[i].pst_cpticks,
               (long) pst[i].pst_cptickstotal,

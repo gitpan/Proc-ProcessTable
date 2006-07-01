@@ -209,7 +209,7 @@ OS_get_table()
       else if (p->process_state & PID_TTYOU)
 	pstate = "ttyout";
 
-      if (p->process_state & (PID_ZOMBIE | PID_EXITED))
+      if (p->process_state & (PID_ORPHANED | PID_EXITED))
         strcpy (pname, "<defunct>");
       else if (p->ppid)
 	{

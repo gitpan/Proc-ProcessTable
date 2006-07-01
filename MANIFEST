@@ -14,6 +14,7 @@ README.solaris
 README.dec_osf
 README.bsdi
 README.netbsd
+README.openbsd
 README.hpux
 README.cygwin
 PORTING
@@ -34,6 +35,7 @@ hints/irix.pl
 hints/dec_osf.pl
 hints/bsdi.pl
 hints/netbsd.pl
+hints/openbsd.pl
 hints/cygwin.pl
 os/Linux.c
 os/Linux.h
@@ -56,6 +58,7 @@ os/bsdi.c
 os/bsdi.h
 os/NetBSD.c
 os/NetBSD.h
+os/OpenBSD.c
 os/cygwin.c
 os/cygwin.h
 t/process.t

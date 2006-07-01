@@ -39,7 +39,7 @@ sub is_sig {
 	}
 }
 
-# usage: killall(singal, pattern)
+# usage: killall(signal, pattern)
 # return: number of procs killed
 sub killall {
 	croak("Usage: killall(signal, pattern)") unless @_==2;
@@ -52,7 +52,8 @@ sub killall {
 	my $t = new Proc::ProcessTable;
 	my $BANG = undef;
 	foreach my $p (@{$t->table}) {
-		if ($p->cmndline =~ /$pat/) {
+	  my $cmndline = $p->{cmndline} || $p->{fname};
+	  if ($cmndline =~ /$pat/) {
 			next unless $p->pid != $$ || $self;
 			if (kill $signal, $p->pid) {
 				$nkilled++;

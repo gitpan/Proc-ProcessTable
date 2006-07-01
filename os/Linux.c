@@ -99,8 +99,9 @@ char* OS_initialize()
 	Sysmem = 0;
 	if( (fp = fopen( "/proc/meminfo", "r" )) != NULL ) { 
 		while(!feof(fp)) {
-			if(fscanf(fp,"Mem: %u", &Sysmem) == 1){
-				Sysmem /= getpagesize();
+			if(fscanf(fp,"MemTotal: %u", &Sysmem) == 1){
+			        Sysmem *= 1024; /* Convert Sysmem from kB to bytes */ 
+				Sysmem /= getpagesize(); /* Convert Sysmem from bytes to pages */
 				break;
 			}
 			if (fgets(cbuf, 1024, fp) == NULL)
@@ -108,7 +109,7 @@ char* OS_initialize()
 		}
 		fclose(fp);
 	}
-
+	
 	init_Hertz_value();
 	return NULL;
 }

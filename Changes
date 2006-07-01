@@ -249,3 +249,15 @@ Revision history for Perl extension Proc::ProcessTable.
 	readdir_r is defined differently for POSIX compiles. Patch for
 	misreport of PID in cygwin (rt.cpan.org ticket #12840).
 	Fix for FC4 gcc-4 buffer overrun complaint. 
+
+0.41	Fri Jun 30 22:04:43 MDT 2006
+	-Port to openbsd from <bsd@openbsd.rutgers.edu>. Fix for
+	EOVERFLOW in HPUX 11.11 from <alan.martin@oracle.com>
+	(rt.cpan.org ticket #18932). Module now requires perl 5.6 as
+	suggested by <rdusong@tique.org> (rt.cpan.org ticket
+	#15279). Patches from <reini.urban@gmail.com> for killall to
+	use fname if cmndline is not defined and rename PID_ZOMBIE to
+	PID_ORPHANED under cygwin (rt.cpan.org ticket #14837,
+	#14836). Fixed empty pctmem bug on linux due to change in
+	format of /proc/meminfo (hopefully this format is stable
+	now??). 
