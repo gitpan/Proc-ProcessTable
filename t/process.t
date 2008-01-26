@@ -6,7 +6,7 @@ use Test;
 BEGIN { plan tests => 3 }
 
 # check wether ProcProcessTable is there
-use Proc::ProcessTable; 
+use Proc::ProcessTable;
 
 # Test code
 
@@ -18,6 +18,7 @@ my $t = new Proc::ProcessTable;
 # Is there a process called cron
 foreach $got ( @{$t->table} )
 {
+  next unless $got->pid == $$;
 #  print STDERR $got->pid, "  ", $got->fname, "\n";
   print STDERR "--------------------------------\n";
   foreach $field ($t->fields){

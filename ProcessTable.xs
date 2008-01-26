@@ -118,6 +118,8 @@ void store_ttydev( HV* myhash, unsigned long ttynum ){
 /*   U 	  ignore this unsigned                                        */
 /*   u 	  unsigned                                                    */
 /*   V    perl scalar value                                           */
+/*   P    ignore this string                                          */
+/*   p    unsigned long                                               */
 /* fields is an array of pointers to field names                      */
 /* following that is a var args list of field values                  */
 /**********************************************************************/
@@ -129,6 +131,7 @@ void bless_into_proc(char* format, char** fields, ...){
   int i_val;
   unsigned u_val;
   long l_val;
+  unsigned long p_val;
   long long ll_val;
 
   HV* myhash;
@@ -186,9 +189,17 @@ void bless_into_proc(char* format, char** fields, ...){
       case 'l':  /* long */
 	l_val = va_arg(args, long);
 	hv_store(myhash, key, strlen(key), newSVnv(l_val), 0);
-
 	/* Look up and store the tty if this is ttynum */
 	if( !strcmp(key, "ttynum") ) store_ttydev( myhash, l_val );
+	break;
+
+      case 'P':  /* ignore; creates an undef value for this key in the hash */
+	va_arg(args, unsigned long);
+	hv_store(myhash, key, strlen(key), &PL_sv_undef, 0);
+	break;
+      case 'p':  /* unsigned long */
+	p_val = va_arg(args, unsigned long);
+	hv_store(myhash, key, strlen(key), newSVnv(p_val), 0);
 	break;
 
       case 'J':  /* ignore; creates an undef value for this key in the hash */

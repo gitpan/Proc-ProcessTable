@@ -85,7 +85,6 @@ char* OS_initialize(void) {
 
 #define FREE_BUFFERS \
 	{	if (kprocbuf != NULL) free (kprocbuf); \
-		if (kinfo != NULL) free (kinfo); \
 	}
 
 void OS_get_table(void) {
@@ -94,7 +93,6 @@ void OS_get_table(void) {
 	char *command_name;
 	int cmdlen;
 	int i;
-	KINFO *kinfo = NULL;
 	struct kinfo_proc *kp;
 	struct kinfo_proc *kprocbuf = NULL;
 	int local_error=0;
@@ -136,14 +134,11 @@ void OS_get_table(void) {
 		may have changed.  */
 	nentries = bufSize/ sizeof(struct kinfo_proc);
 
-	if ((kinfo = malloc(nentries * sizeof(KINFO))) == NULL)
-		DIE_HORRIBLY ("Memory allocation failure")
-	memset(kinfo, 0, (nentries * sizeof(*kinfo)));
-
 	/* the loop was stolen from ps - but it backs through the data.
 	 * We're going through forward, which means we need to play
 	 * slightly different games.
 	 */
+
 #if 1
 	kp += nentries - 1;
 	for (i = 1; i <= nentries; i++, --kp) {
@@ -152,14 +147,15 @@ void OS_get_table(void) {
 #endif
 		struct extern_proc *p;
 		struct eproc *e;
-		KINFO *ki;
+		KINFO kinfo;
+		KINFO *ki = &kinfo;
+		memset(ki, 0, sizeof(*ki));
 #ifdef TESTING
 		char *ttname = NULL;
 #endif /* def TESTING */
 
 		time_value_t total_time, system_time, user_time;
 
-		ki = &kinfo[i];	
 		ki->ki_p = kp;
 
 		get_task_info(ki);

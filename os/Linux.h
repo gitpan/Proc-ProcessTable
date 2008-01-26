@@ -58,8 +58,8 @@ struct procstat {
   unsigned timeout;
   unsigned itrealvalue;
   unsigned long  starttime;
-  unsigned vsize;
-  unsigned rss;
+  unsigned long vsize;
+  unsigned long rss;
   unsigned rlim;
   unsigned startcode;
   unsigned endcode;
@@ -75,7 +75,7 @@ struct procstat {
 
 /* We need to pass in a cap for ignore, lower for store on object */
 /* We can just lc these! */
-static char Defaultformat[] = "IIIIIIIIIIIIIJJJJJJUIISLSSSSSIIIIIIS";
+static char Defaultformat[] = "IIIIIIIIIIIIIJJJJJJPPISLSSSSSIIIIIIS";
 
 /* Mapping of field to type */
 static char* Fields[] = {

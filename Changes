@@ -261,3 +261,10 @@ Revision history for Perl extension Proc::ProcessTable.
 	#14836). Fixed empty pctmem bug on linux due to change in
 	format of /proc/meminfo (hopefully this format is stable
 	now??). 
+
+0.42	Fri Jan 25 22:29:00 MST 2008
+	-Patch to fix PROC_FS define in Solaris 5.10 from jlv
+	<jloverso@mathworks.com>; patch to replace kinfo array and use
+	KINFO structure on darwin. Patch from Steve Linn
+	<steve@rhythm.com> for x86_64 linux. Shortened test code so it
+	only shows info for current process.
