@@ -1,3 +1,4 @@
+#include <linux/limits.h>
 #include <fcntl.h>
 #include <asm/param.h>
 #include <stdlib.h>
@@ -11,8 +12,10 @@
 #include <sys/stat.h>
 #include <sys/vfs.h>
 #include <sys/types.h>
-#include <sys/param.h>
-#include <linux/limits.h>
+
+#ifndef ARG_MAX
+#define ARG_MAX sysconf(_SC_ARG_MAX)
+#endif
 
 /****************************************/
 /* Process state strings that we return */

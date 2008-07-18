@@ -1,6 +1,6 @@
 package Proc::ProcessTable;
 
-require 5.6.0;
+use 5.006;
 
 use strict;
 use Carp;
@@ -16,7 +16,7 @@ require DynaLoader;
 @EXPORT = qw(
 	
 );
-$VERSION = '0.42';
+$VERSION = '0.43';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -46,7 +46,7 @@ use Proc::ProcessTable::Process;
 use File::Find;
 
 my %TTYDEVS;
-my $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
+our $TTYDEVSFILE = "/tmp/TTYDEVS"; # Where we store the TTYDEVS hash
 
 sub new 
 {

@@ -1,9 +1,6 @@
-Proc::ProcessTable, version 0.41
+Proc::ProcessTable, version 0.43
 
-Please note that I've moved development of this package to
-sourceforge.net. Please address all comments/bugs/patches to:
-
-http://sourceforge.net/projects/proc-ptable/
+Please use rt.cpan.org to submit bugs and patches.
 
 STATUS
 ======
@@ -114,7 +111,7 @@ support for the dec_osf port.
 			
 COPYRIGHT
 =========
-Copyright (c) 1998-2006 Daniel J. Urist. All rights reserved.
+Copyright (c) 1998-2008 Daniel J. Urist. All rights reserved.
 This package is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
