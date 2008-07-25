@@ -37,7 +37,7 @@
  * The portions of this code which were necessary to tie into the Perl
  * Proc::ProcessTable module are:
  *
- * Copyright (c) 2003, 2004 by Thomas R. Wyant, III
+ * Copyright (c) 2003, 2004, 2008 by Thomas R. Wyant, III
  *
  * and may be reused under the same terms as Perl itself.
  */
@@ -141,15 +141,27 @@ void OS_get_table(void) {
 
 #if 1
 	kp += nentries - 1;
-	for (i = 1; i <= nentries; i++, --kp) {
+/*	The following turns out to be an off-by-one error, found by
+ *	Jan Ruzucka. I suspect I was confused by the original code's
+ *	predecrementing i in the test portion of the for(), not the
+ *	more usual increment portion.
+ *	for (i = 1; i <= nentries; i++, --kp) {	*/
+	for (i = 0; i < nentries; i++, --kp) {
 #else
 	for (i = nentries; --i >= 0; ++kp) {
 #endif
 		struct extern_proc *p;
 		struct eproc *e;
+		/* Also, jlv pointed out that the original kinfo,
+		 * allocated to hold all process entries, was not
+		 * needed or efficiently used, and an automatic
+		 * kinfo big enough to hold a single process entry,
+		 * was all that was needed. His rt.cpan.org ticket
+		 * (24331) also reports the same off-by-one error
+		 * previously reported by Jan Ruzucka */
 		KINFO kinfo;
+		memset(&kinfo, 0, sizeof(kinfo));
 		KINFO *ki = &kinfo;
-		memset(ki, 0, sizeof(*ki));
 #ifdef TESTING
 		char *ttname = NULL;
 #endif /* def TESTING */

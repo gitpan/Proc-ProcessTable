@@ -278,3 +278,7 @@ Revision history for Perl extension Proc::ProcessTable.
 	problems on darwin from  Tom Wyant <twyant3@comcast.net>
 	(rt.cpan.org bug IDs 24331, 32761, and 33698); fix for ARG_MAX
 	dynamic configuration in os/Linux.h (rt.cpan.org bug ID 36283).
+
+0.44	Fri Jul 25 08:25:52 MDT 2008
+	-Patch from Tom Wyant <twyant3@comcast.net> for darwin issues
+	that didn't make it into 0.43.

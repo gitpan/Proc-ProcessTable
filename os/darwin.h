@@ -37,7 +37,7 @@
  * The portions of this code which were necessary to tie into the Perl
  * Proc::ProcessTable module are:
  *
- * Copyright (c) 2003, Thomas R. Wyant, III
+ * Copyright (c) 2003 and 2008, Thomas R. Wyant, III
  *
  * and may be reused under the same terms as Perl itself.
  */
@@ -60,7 +60,11 @@
 #include <sys/resource.h>
 #include <sys/stat.h>
 #include <sys/sysctl.h>
+#ifndef KERN_PROCARGS2	/* Not defined in Jaguar (10.2);
+			   Defined in Panther (10.3) at least
+			   through Leopard (10.5). */
 #include <kvm.h>
+#endif
 #include <unistd.h>
 
 
@@ -108,7 +112,11 @@ typedef struct kinfo {
 		struct policy_fifo_info fifo;
 	} schedinfo;
 	int	invalid_tinfo;
+#ifdef KERN_PROCARGS2	/* Defined in Panther (10.3) and up */
+	mach_msg_type_number_t	thread_count;
+#else
 	int	thread_count;
+#endif
 	thread_port_array_t thread_list;
 	thread_values_t *thval;
 	int	invalid_thinfo;
