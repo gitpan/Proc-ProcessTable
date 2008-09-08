@@ -14,9 +14,9 @@ require DynaLoader;
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 @EXPORT = qw(
-	
+    
 );
-$VERSION = '0.44';
+$VERSION = '0.45';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -27,13 +27,13 @@ sub AUTOLOAD {
     ($constname = $AUTOLOAD) =~ s/.*:://;
     my $val = constant($constname, @_ ? $_[0] : 0);
     if ($! != 0) {
-	if ($! =~ /Invalid/) {
-	    $AutoLoader::AUTOLOAD = $AUTOLOAD;
-	    goto &AutoLoader::AUTOLOAD;
-	}
-	else {
-		croak "Your vendor has not defined Proc::ProcessTable macro $constname";
-	}
+    if ($! =~ /Invalid/) {
+        $AutoLoader::AUTOLOAD = $AUTOLOAD;
+        goto &AutoLoader::AUTOLOAD;
+    }
+    else {
+        croak "Your vendor has not defined Proc::ProcessTable macro $constname";
+    }
     }
     eval "sub $AUTOLOAD { $val }";
     goto &$AUTOLOAD;
@@ -61,6 +61,18 @@ sub new
     $self->{cache_ttys} = 1 
   }
 
+  if ( exists $args{enable_ttys} && (! $args{enable_ttys}))
+  {
+    $self->{enable_ttys} = 0;
+    if ($self->{'cache_ttys'}) {
+      carp("cache_ttys specified with enable_ttys, cache_ttys a no-op");
+    }
+  }
+  else
+  {
+    $self->{enable_ttys} = 1;
+  }
+
   my $status = $self->initialize;
   mutex_new(0);
   if($status)
@@ -77,30 +89,34 @@ sub initialize
 {
   my ($self) = @_;
 
-  # Get the mapping of TTYs to device nums
-  # reading/writing the cache if we are caching
-  if( $self->{cache_ttys} )
+  if ($self->{enable_ttys})
   {
 
-    require Storable;
-
-    if( -r $TTYDEVSFILE )
+    # Get the mapping of TTYs to device nums
+    # reading/writing the cache if we are caching
+    if( $self->{cache_ttys} )
     {
-      $_ = Storable::retrieve($TTYDEVSFILE);
-      %Proc::ProcessTable::TTYDEVS = %$_;
+
+      require Storable;
+
+      if( -r $TTYDEVSFILE )
+      {
+        $_ = Storable::retrieve($TTYDEVSFILE);
+        %Proc::ProcessTable::TTYDEVS = %$_;
+      }
+      else
+      {
+        $self->_get_tty_list;
+        my $old_umask = umask;
+        umask 022;
+        Storable::store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
+        umask $old_umask;
+      }
     }
     else
     {
       $self->_get_tty_list;
-      my $old_umask = umask;
-      umask 022;
-      Storable::store(\%Proc::ProcessTable::TTYDEVS, $TTYDEVSFILE);
-      umask $old_umask;
     }
-  }
-  else
-  {
-    $self->_get_tty_list;
   }
 
   # Call the os-specific initialization
@@ -120,11 +136,11 @@ sub _get_tty_list
   undef %Proc::ProcessTable::TTYDEVS;
   find({ wanted => 
        sub{
-	 $File::Find::prune = 1 if -d $_ && ! -x $_;
-	 my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
-	    $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
-	 $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name
-	   if(-c $File::Find::name);
+     $File::Find::prune = 1 if -d $_ && ! -x $_;
+     my($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,
+        $atime,$mtime,$ctime,$blksize,$blocks) = stat($File::Find::name);
+     $Proc::ProcessTable::TTYDEVS{$rdev} = $File::Find::name
+       if(-c $File::Find::name);
        }, no_chdir => 1},
        "/dev" 
       );
@@ -158,7 +174,16 @@ Perl interface to the unix process table.
 
 =item new
 
-Creates a new ProcessTable object. The constructor can take one flag:
+Creates a new ProcessTable object. The constructor can take the following
+flags:
+
+enable_ttys -- causes the constructor to use the tty determination code,
+which is the default behavior.  Setting this to 0 diables this code,
+thus preventing the module from traversing the device tree, which on some
+systems, can be quite large and/or contain invalid device paths (for example,
+Solaris does not clean up invalid device entries when disks are swapped).  If
+this is specified with cache_ttys, a warning is generated and the cache_ttys
+is overriden to be false.
 
 cache_ttys -- causes the constructor to look for and use a file that
 caches a mapping of tty names to device numbers, and to create the
@@ -230,3 +255,5 @@ D. Urist, durist@frii.com
 Proc::ProcessTable::Process.pm, perl(1).
 
 =cut
+
+

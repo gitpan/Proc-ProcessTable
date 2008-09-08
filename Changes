@@ -282,3 +282,10 @@ Revision history for Perl extension Proc::ProcessTable.
 0.44	Fri Jul 25 08:25:52 MDT 2008
 	-Patch from Tom Wyant <twyant3@comcast.net> for darwin issues
 	that didn't make it into 0.43.
+
+0.45  	Mon Sep  8 09:13:14 MDT 2008
+	-Patch from Milosz Tanski <mtanski@gridapp.com> to make module
+	thread-safe on linux (rt.cpan.org ID 38709). Patch from Scott
+	Davis <darkpreludesi@hotmail.com> for new constructor flag
+	enable_ttys, which when set to 0 disables traversing the
+	device tree.  
