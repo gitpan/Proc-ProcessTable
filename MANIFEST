@@ -7,8 +7,8 @@ Killfam.pm
 ProcessTable.xs
 README
 README.aix
-README.freebsd
 README.freebsd-kvm
+README.freebsd-procfs
 README.linux
 README.solaris
 README.dec_osf
@@ -30,7 +30,6 @@ hints/aix_4_3.pl
 hints/aix_5.pl
 hints/hpux.pl
 hints/freebsd.pl
-hints/freebsd_5.pl
 hints/irix.pl
 hints/dec_osf.pl
 hints/bsdi.pl
@@ -76,5 +75,6 @@ README.darwin
 os/darwin.c
 os/darwin.h
 hints/darwin.pl
+hints/midnightbsd.pl
 META.yml                                 Module meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
