@@ -18,7 +18,7 @@ require DynaLoader;
 @EXPORT = qw(
     
 );
-$VERSION = '0.48';
+$VERSION = '0.49';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -186,12 +186,12 @@ Creates a new ProcessTable object. The constructor can take the following
 flags:
 
 enable_ttys -- causes the constructor to use the tty determination code,
-which is the default behavior.  Setting this to 0 diables this code,
+which is the default behavior.  Setting this to 0 disables this code,
 thus preventing the module from traversing the device tree, which on some
 systems, can be quite large and/or contain invalid device paths (for example,
 Solaris does not clean up invalid device entries when disks are swapped).  If
 this is specified with cache_ttys, a warning is generated and the cache_ttys
-is overriden to be false.
+is overridden to be false.
 
 cache_ttys -- causes the constructor to look for and use a file that
 caches a mapping of tty names to device numbers, and to create the
