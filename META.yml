@@ -22,4 +22,4 @@ requires:
   Storable: 0
 resources:
   repository: https://github.com/jwbargsten/perl-proc-processtable
-version: 0.49
+version: 0.50
